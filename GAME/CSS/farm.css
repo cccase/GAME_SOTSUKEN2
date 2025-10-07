@@ -29,3 +29,10 @@
     align-items: center;
     font-size: 2vw;
 }
+#next-month-button {
+    border-radius: 5px;
+    margin: 5px;
+    font-weight: bold;
+    color: black;
+    font-size: 0.9em;
+}

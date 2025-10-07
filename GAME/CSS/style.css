@@ -64,3 +64,14 @@ html {
     /* 畑の大きさが決まっても、このコンテナは必ず横にスクロールしない */
     overflow: hidden;
 }
+
+
+/* ボタンの共通スタイル */
+.action-button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-weight: bold;
+    color: white;
+    font-size: 0.9em;
+}
