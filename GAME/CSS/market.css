@@ -1,0 +1,166 @@
+/* market.css (サイドパネル・タブコンテンツ専用) */
+
+/* マーケットのエリアを囲むラッパー（#side-panel-wrapper） */
+#side-panel-wrapper {
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    padding: 1% 0;
+    box-sizing: border-box;
+}
+
+/* [新規] タブボタンのコンテナ */
+#side-panel-tabs {
+    display: flex;
+    justify-content: space-around;
+    /* ボタンを均等に配置 */
+    width: 96%;
+    /* 左右に少し余白を持たせる */
+    margin: 0 auto;
+    flex-shrink: 0;
+    /* 縮まないように */
+}
+
+/* [新規] 個別ボタンのスタイル */
+.tab-button {
+    padding: 5px 10px;
+    border: 1px solid black;
+    background-color: #e0e0e0;
+    flex-grow: 1;
+    text-align: center;
+    margin: 0 2px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.tab-button:first-child {
+    margin-left: 0;
+}
+
+.tab-button:last-child {
+    margin-right: 0;
+}
+
+.tab-button.active {
+    background-color: #00ff00;
+    /* アクティブなタブの色 */
+    border-bottom: none;
+    /* 下の線を消して、コンテンツと一体化させる表現 */
+    position: relative;
+    z-index: 10;
+}
+
+#side-panel-content {
+    width: 90%;
+    height: 80%;
+    margin: 2% auto;
+    background-color: #4682b4;
+    border-radius: 5%;
+    /* 角の丸みは比率で */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2vw;
+    flex-grow: 1;
+    /* 親要素の残りのスペースを占める */
+}
+
+.tab-content {
+    width: 100%;
+    height: 100%;
+    display: none;
+    /* 初期状態では非表示 */
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-content.active {
+    display: flex;
+    /* アクティブなタブの内容を表示 */
+}
+
+/* --- タブコンテンツ内のスタイル --- */
+
+/* コンテンツを囲む青い角丸の箱の共通スタイル */
+.market-content-box {
+    width: 95%;
+    height: 95%;
+    background-color: #4682b4;
+    /* 青色 */
+    border-radius: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2vw;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+/* 4分割グリッド (マーケット/ノート画面) */
+.item-grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* 個別アイテムスロットのスタイル */
+.item-slot {
+    background-color: white;
+    border-radius: 5px;
+    color: #333;
+    font-size: 0.8em;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    text-align: center;
+}
+
+/* ボタンの共通スタイル */
+.action-button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-weight: bold;
+    color: white;
+    font-size: 0.9em;
+}
+
+/* マーケット画面のボタン (緑色) */
+.market-button {
+    background-color: #55a839;
+    /* 緑色 */
+}
+
+/* ノート画面のボタン (灰色/白色) */
+.note-button {
+    background-color: #f0f0f0;
+    /* 枠の色に近い */
+    border: 1px solid #ccc;
+    color: #333;
+}
+
+/* 相場（価格）チャートエリアのスタイル */
+.price-chart-box {
+    background-color: #f0f0f0;
+    /* 内側は灰色 */
+    border: 5px solid #4682b4;
+    /* 外枠の青色をborderで表現 */
+    color: #333;
+    font-size: 1.2em;
+    border-radius: 20px;
+    /* 画像の角の丸みを再現 */
+}

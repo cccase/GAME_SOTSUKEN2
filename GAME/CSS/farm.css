@@ -1,0 +1,31 @@
+/* farm.css (畑エリア専用) */
+
+/* 畑のエリア (正方形を維持し、縮小を禁止) */
+#farm-area {
+    font-size: 2vw;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f0f0f0;
+    /* 正方形を維持 */
+    flex-shrink: 0;
+    /* 画面が狭くなっても縮小しないように設定 */
+
+    /* その他のスタイルは維持 */
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-right: 2%;
+}
+
+#farm-box {
+    width: 80%;
+    height: 80%;
+    background-color: #975c25;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    font-size: 2vw;
+}
