@@ -97,7 +97,9 @@
 
                     <div id="content-price" class="tab-content">
                         <div class="side-panel-box price-chart-box">
-                            価格変動 チャート
+                            <div style="width: 80%; float: center">
+                                <canvas id="line"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,5 +107,7 @@
         </div>
     </div>
     <script src="GAME.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="chart.js"></script>
 </body>
 </html>

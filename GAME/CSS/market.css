@@ -129,15 +129,6 @@
     text-align: center;
 }
 
-/* ボタンの共通スタイル */
-.action-button {
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-top: 5px;
-    font-weight: bold;
-    color: white;
-    font-size: 0.9em;
-}
 
 /* マーケット画面*/
 /* ------------------------------------------------------ */
