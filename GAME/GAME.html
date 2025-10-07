@@ -19,7 +19,10 @@
 
         <div id="main-content">
             <div id="farm-area">
-                <button id="next-month-button" class="action-button">次の月へ</button>
+                <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
+                    <button id="farm-button" class="action-button">収穫</button>
+                    <button id="next-month-button" class="action-button">次の月へ</button>
+                </div>
                 <div id="farm-box">
                     <div style="font-size: 0.4em;">10 x 10</div>
                 </div>
@@ -97,8 +100,16 @@
 
                     <div id="content-price" class="tab-content">
                         <div class="side-panel-box price-chart-box">
-                            <div style="width: 80%; height: 100%; float: center">
+                            <div id="chart-container"
+                                style="width: 95%; height: 70%; display: flex; justify-content: center; align-items: center;">
                                 <canvas id="line"></canvas>
+                            </div>
+
+                            <div id="current-prices-container">
+                                <div id="price-lettuce" class="current-price-item">レタス: --- G</div>
+                                <div id="price-carrot" class="current-price-item">ニンジン: --- G</div>
+                                <div id="price-tomato" class="current-price-item">トマト: --- G</div>
+                                <div id="price-onion" class="current-price-item">タマネギ: --- G</div>
                             </div>
                         </div>
                     </div>

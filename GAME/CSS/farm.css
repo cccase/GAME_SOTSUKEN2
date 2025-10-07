@@ -29,7 +29,8 @@
     align-items: center;
     font-size: 2vw;
 }
-#next-month-button {
+#next-month-button,
+#farm-button {
     border-radius: 5px;
     margin: 5px;
     font-weight: bold;

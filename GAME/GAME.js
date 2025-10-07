@@ -30,7 +30,7 @@ function initTabSwitcher() {
         document.getElementById(`content-${tabId}`).classList.add('active');
     });
 }
-// GAME/main_game_core.js - 月単位進行と価格変動ロジック (最新データ反映 & 参照価格を基本価格に修正)
+// GAME/main_game_core.js - 月単位進行と価格変動ロジック (価格表示機能追加)
 
 // DOM要素の取得
 const moneyDisplay = document.querySelector('#gold-box'); 
@@ -96,35 +96,53 @@ function updateInfoPanel() {
     dateDisplay.textContent = `${gameData.month}ヶ月目 ${gameData.season}`;
 }
 
+// 【新規追加】現在の価格を相場タブに表示する関数
+function updateCurrentPrices() {
+    for (const cropId in gameData.priceHistory) {
+        const history = gameData.priceHistory[cropId];
+        const lastPrice = history[history.length - 1]; // 最後の要素が現在の価格
+        const cropName = PRICE_BASE[cropId].label;
+        
+        // HTML要素のIDを動的に生成 (lettuce, carrot, tomato, onion)
+        // HTMLのIDは price-lettuce, price-carrot, ... に変更されているため、IDを調整
+        let elementId;
+        if (cropId === 'lettuce') elementId = 'price-lettuce';
+        else if (cropId === 'carrot') elementId = 'price-carrot';
+        else if (cropId === 'tomato') elementId = 'price-tomato';
+        else if (cropId === 'onion') elementId = 'price-onion';
+        
+        const priceElement = document.getElementById(elementId);
+        
+        if (priceElement && lastPrice !== undefined) {
+            priceElement.textContent = `${cropName}: ${lastPrice} G`;
+        }
+    }
+}
+
+
 // 価格をランダムに変動させて計算 (2ヶ月に一度のみ呼ばれる)
 function generateMonthlyPrice(cropId) {
     const base = PRICE_BASE[cropId];
-    // 【修正点】基本価格 (basePrice) を参照
     const basePrice = base.basePrice; 
     let changeRate;
 
     if (cropId === 'lettuce') {
         // レタス: -50% から +35% の間で変動
-        const min = base.minVolatility; // -0.50
-        const max = base.maxVolatility; // 0.35
-        // (乱数 * 範囲) + 最小値
+        const min = base.minVolatility; 
+        const max = base.maxVolatility; 
         changeRate = (Math.random() * (max - min)) + min;
     } else {
         // トマト, ニンジン, タマネギ: ±volatility の間で変動
         const volatility = base.volatility;
-        // (乱数 * 2 * volatility) - volatility
         changeRate = (Math.random() * 2 * volatility) - volatility;
     }
     
-    // 【修正点】基本価格に変動率を適用
     let newPrice = basePrice * (1 + changeRate);
     
     // 最低価格と最大価格の制限
-    // 最低価格は種価格より少し上（購入価格を保証）
     if (newPrice < base.seedPrice + 10) {
         newPrice = base.seedPrice + 10;
     }
-    // 最大値の制限
     if (newPrice > base.basePrice * 2) {
         newPrice = base.basePrice * 2;
     }
@@ -134,7 +152,6 @@ function generateMonthlyPrice(cropId) {
 
 // グラフ描画データを作成 (変更なし)
 function getChartData() {
-    // X軸のラベルは1ヶ月目から現在のgameData.monthまで
     const labels = Array.from({ length: gameData.month }, (_, i) => `${i + 1}ヶ月目`);
     const datasets = [];
 
@@ -150,7 +167,7 @@ function getChartData() {
             pointBorderColor: base.color.replace('0.8', '0.6'),
             pointHoverBackgroundColor: "white",
             pointHoverBorderColor: base.color.replace('0.8', '0.6'),
-            lineTension: 0.1,
+            lineTension: 0.2,
             data: history
         });
     }
@@ -158,14 +175,13 @@ function getChartData() {
     return { labels, datasets };
 }
 
-// グラフを初期化または更新するメイン関数 (変更なし)
+// グラフを初期化または更新するメイン関数
 function renderPriceChart() {
     const ctx = document.getElementById('line')?.getContext('2d');
     if (!ctx) return; 
 
     const data = getChartData();
     
-    // Y軸の最大値を動的に設定 (全データの最大値を100単位で切り上げ)
     let maxPrice = 0;
     data.datasets.forEach(dataset => {
         dataset.data.forEach(price => {
@@ -205,20 +221,21 @@ function renderPriceChart() {
     };
 
     if (priceChartInstance) {
-        // 既にインスタンスがある場合はデータを更新
         priceChartInstance.data.labels = data.labels;
         priceChartInstance.data.datasets = data.datasets;
         priceChartInstance.options.scales.yAxes[0].ticks.suggestedMax = suggestedMax; 
         priceChartInstance.options.scales.yAxes[0].ticks.suggestedMin = suggestedMin;
         priceChartInstance.update();
     } else {
-        // インスタンスがない場合は新規作成
         priceChartInstance = new Chart(ctx, {
             type: 'line',
             data: data,
             options: chartOptions
         });
     }
+    
+    // 【新規追加】グラフの更新後に現在の価格表示も更新する
+    updateCurrentPrices(); 
 }
 
 // --- イベントリスナーと初期化 ---
@@ -227,7 +244,6 @@ if (nextMonthBtn) {
     nextMonthBtn.addEventListener('click', () => {
         gameData.month++;
         
-        // 偶数月で変動 (2ヶ月に一度の変動)
         const shouldFluctuate = (gameData.month % 2 === 0); 
 
         // 価格データの更新
@@ -235,16 +251,12 @@ if (nextMonthBtn) {
             const history = gameData.priceHistory[cropId];
             
             if (shouldFluctuate) {
-                // 偶数月の場合は新しい価格を生成
                 const newPrice = generateMonthlyPrice(cropId);
                 history.push(newPrice);
             } else {
-                // 奇数月の場合は前月の価格をそのままコピー
                 if (history.length > 0) {
-                    // 前月の価格をそのままコピー (変動しない)
                     history.push(history[history.length - 1]);
                 } else {
-                    // 1ヶ月目 (初期化時にデータが入っているはずだが、念のため)
                     history.push(PRICE_BASE[cropId].basePrice); 
                 }
             }
@@ -260,12 +272,13 @@ if (nextMonthBtn) {
 
 // ゲームとグラフの初期化
 document.addEventListener('DOMContentLoaded', () => {
-    // 1ヶ月目の初期価格データを生成（変動はしないが、最初のデータとして基本価格を入れる）
+    // 1ヶ月目の初期価格データを生成
     for (const cropId in gameData.priceHistory) {
         gameData.priceHistory[cropId].push(PRICE_BASE[cropId].basePrice);
     }
     
     updateInfoPanel(); // 初期情報の表示
+    updateCurrentPrices(); // 【新規追加】初期価格の表示
 
     // 相場タブがクリックされた時にグラフを再描画する処理を追加
     const tabPriceBtn = document.getElementById('tab-price');

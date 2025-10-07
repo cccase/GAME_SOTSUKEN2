@@ -190,3 +190,43 @@
     border-radius: 20px;
     /* 画像の角の丸みを再現 */
 }
+/* market.css の末尾に追加 */
+
+/* グラフと価格表示エリアのレイアウト */
+.price-chart-box {
+    /* グラフと価格を縦に並べる */
+    flex-direction: column; 
+    /* グラフと価格コンテナがスペースを均等に占めるように */
+    justify-content: space-around; 
+}
+
+/* グラフコンテナの調整 */
+#chart-container {
+    width: 95%; 
+    height: 70%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 現在価格表示エリア */
+#current-prices-container {
+    width: 90%;
+    height: 20%;
+    display: flex;
+    justify-content: space-around; /* 要素を均等に配置 */
+    align-items: center;
+    border-top: 1px dashed #777; /* 区切り線 */
+    padding-top: 5px;
+}
+
+/* 個別価格アイテムのスタイル */
+.current-price-item {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding: 3px 5px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
