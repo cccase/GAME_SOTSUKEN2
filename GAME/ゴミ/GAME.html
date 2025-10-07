@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>農園ゲーム（仮）</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="info-panel">
+            <h1>農園ゲーム（仮）</h1>
+            <p>資金: <span id="money">1000</span>G</p>
+            <p>日付: <span id="date">1日目</span> (<span id="season">春</span>)</p>
+            <p>土地: <span id="land-used">0</span>/<span id="land-total">100</span>マス</p>
+            <button id="next-day-btn">次の日へ</button>
+        </div>
+
+        <div id="main-game-area">
+            <div id="tool-selection">
+                <button id="tool-plant" class="active">植える</button>
+                <button id="tool-harvest">収穫する</button>
+            </div>
+            
+            <div id="farm-area"></div>
+            
+            <div id="market-panel">
+                <h3>マーケット</h3>
+                <div id="seed-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <audio id="plant-sound" src="Sounds/plant.mp3" preload="auto"></audio>
+    <audio id="harvest-sound" src="Sounds/harvest.mp3" preload="auto"></audio>
+    <script src="GAME.js"></script>
+</body>
+</html>

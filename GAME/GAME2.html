@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>農園ゲーム（仮）</title>
+    <style>
+        /* CSSは<style>タグ内に記述しています */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            /* 画面全体を使うために必須 */
+            font-family: sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        /* 全体を囲むコンテナ：画面全体を占有 */
+        #slide-container {
+            width: 100vw;
+            /* Viewport Width (画面幅) */
+            height: 100vh;
+            /* Viewport Height (画面高) */
+            display: flex;
+            flex-direction: column;
+            /* 縦に並べる（ヘッダー、メイン） */
+            background-color: white;
+            /* スライドの背景 */
+            box-sizing: border-box;
+            /* paddingやborderをwidth/heightに含める */
+        }
+
+        /* --- ヘッダー部分のスタイル --- */
+        #game-header {
+            display: flex;
+            justify-content: space-between;
+            /* 均等に配置 */
+            padding: 1% 2%;
+            /* 上下の余白を確保 */
+            border-bottom: 1px solid #ccc;
+            flex-shrink: 0;
+            /* 縮小させない */
+        }
+
+        .ui-box {
+            padding: 0.5% 1%;
+            border: 1px solid black;
+            background-color: #f0f0f0;
+            /* 色は無視するとのことですが、境界線として */
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* サイズを柔軟にする */
+            flex-grow: 1;
+            margin: 0 1%;
+            min-width: 150px;
+            /* 最小幅を設定してつぶれすぎないように */
+            height: 50px;
+        }
+
+        /* --- メインコンテンツ（畑とマーケット）のスタイル --- */
+        /* ----------------------- */
+        /* ----------------------- */
+
+        #main-content {
+            flex-grow: 1;
+            /* 残りのスペースを全て占有 */
+            display: flex;
+            padding: 2%;
+            /* 畑の大きさが決まっても、このコンテナは必ず横にスクロールしない */
+            overflow: hidden;
+        }
+
+
+        /* --- 畑エリアのスタイル --- */
+        /* ----------------------- */
+        /* ----------------------- */
+
+        /* 畑のエリア (正方形を維持し、縮小を禁止) */
+        #farm-area {
+            font-size: 2vw;
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            background-color: #f0f0f0;
+            /* 正方形を維持 */
+            flex-shrink: 0;
+            /* 画面が狭くなっても縮小しないように設定 */
+
+            /* その他のスタイルは維持 */
+            border: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-right: 2%;
+        }
+
+        #farm-box {
+            width: 80%;
+            height: 80%;
+            background-color: #975c25;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            font-size: 2vw;
+        }
+
+
+        /* --- マーケットエリアのスタイル --- */
+        /* ----------------------- */
+        /* ----------------------- */
+
+        /* マーケットのエリアを囲むラッパー（#side-panel-wrapper） */
+        #side-panel-wrapper {
+            flex-grow: 1;
+            background-color: #f0f0f0;
+            border: 1px solid black;
+            display: flex;
+            flex-direction: column;
+            /* text-align: center; (ボタンの配置はタブエリアに任せるため削除) */
+            font-weight: bold;
+            padding: 1% 0;
+            box-sizing: border-box;
+        }
+
+        /* [新規] タブボタンのコンテナ */
+        #side-panel-tabs {
+            display: flex;
+            justify-content: space-around;
+            /* ボタンを均等に配置 */
+            width: 96%;
+            /* 左右に少し余白を持たせる */
+            margin: 0 auto;
+            flex-shrink: 0;
+            /* 縮まないように */
+        }
+
+        /* [新規] 個別ボタンのスタイル */
+        .tab-button {
+            padding: 5px 10px;
+            border: 1px solid black;
+            background-color: #e0e0e0;
+            flex-grow: 1;
+            text-align: center;
+            margin: 0 2px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+
+        .tab-button:first-child {
+            margin-left: 0;
+        }
+
+        .tab-button:last-child {
+            margin-right: 0;
+        }
+
+        .tab-button.active {
+            background-color: #00ff00;
+            /* アクティブなタブの色 */
+            border-bottom: none;
+            /* 下の線を消して、コンテンツと一体化させる表現 */
+            position: relative;
+            z-index: 10;
+        }
+
+        #side-panel-content {
+            width: 90%;
+            height: 80%;
+            margin: 2% auto;
+            background-color: #4682b4;
+            border-radius: 5%;
+            /* 角の丸みは比率で */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2vw;
+            flex-grow: 1;
+            /* 親要素の残りのスペースを占める */
+        }
+
+        .tab-content {
+            width: 100%;
+            height: 100%;
+            display: none;
+            /* 初期状態では非表示 */
+            justify-content: center;
+            align-items: center;
+        }
+        .tab-content.active {
+            display: flex;
+            /* アクティブなタブの内容を表示 */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="slide-container">
+        <div id="game-header">
+            <div id="title-box" class="ui-box">農園ゲーム（仮）</div>
+            <div id="date-box" class="ui-box">1日目 春</div>
+            <div id="gold-box" class="ui-box">1000 ゴールド</div>
+        </div>
+
+        <div id="main-content">
+            <div id="farm-area">
+                畑
+                <div id="farm-box">
+                    <div style="font-size: 0.4em;">10 x 10</div>
+                </div>
+            </div>
+
+            <div id="side-panel-wrapper">
+                <div id="side-panel-tabs">
+                    <div id="tab-market" class="tab-button active">マーケット</div>
+                    <div id="tab-note" class="tab-button">ノート</div>
+                    <div id="tab-price" class="tab-button">相場</div>
+                </div>
+                <div id="side-panel-content">
+                    <!-- タブで切り替わるエリア -->
+                    <div id="content-market" class="tab-content active">マーケットの内容</div>
+                    <div id="content-note" class="tab-content" style="display:none;">ノートの内容</div>
+                    <div id="content-price" class="tab-content" style="display:none;">相場の内容</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
