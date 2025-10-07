@@ -1,5 +1,3 @@
-<!--見れてますか？ 1+1をしてください-->
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -14,7 +12,7 @@
     <div id="slide-container">
         <div id="game-header">
             <div id="title-box" class="ui-box">農園ゲーム（仮）</div>
-            <div id="date-box" class="ui-box">1ヶ月 目  春</div>
+            <div id="date-box" class="ui-box">1ヶ月 目 春</div>
             <div id="gold-box" class="ui-box">1000 ゴールド</div>
         </div>
 
@@ -28,45 +26,80 @@
 
             <div id="side-panel-wrapper">
                 <div id="side-panel-tabs">
-                    <div id="tab-market" class="tab-button active">マーケット</div>
-                    <div id="tab-note" class="tab-button">ノート</div>
-                    <div id="tab-price" class="tab-button">相場</div>
+                    <button id="tab-market" class="tab-button active">マーケット</button>
+                    <button id="tab-note" class="tab-button">ノート</button>
+                    <button id="tab-price" class="tab-button">相場</button>
                 </div>
                 <div id="side-panel-content">
+
                     <div id="content-market" class="tab-content active">
-                        <div class="market-content-box">
+                        <div class="side-panel-box">
                             <div class="item-grid">
                                 <div class="item-slot">
-                                    トマト 🍅<br>
-                                    価格: 12 G<br>
-                                    収穫まで: 3ヶ月<br>
+                                    レタス 🥬<br>
+                                    価格: 50 G<br>
+                                    収穫まで: 1ヶ月<br>
+                                    基本売値: 160 G<br>
                                     <div class="action-button market-button">この種を植える</div>
                                 </div>
-                                <div class="item-slot"></div>
-                                <div class="item-slot"></div>
-                                <div class="item-slot"></div>
+                                <div class="item-slot">
+                                    ニンジン 🥕<br>
+                                    価格: 100 G<br>
+                                    収穫まで: 2ヶ月<br>
+                                    基本売値: 280 G<br>
+                                    <div class="action-button market-button">この種を植える</div>
+                                </div>
+                                <div class="item-slot">
+                                    トマト 🍅<br>
+                                    価格: 120 G<br>
+                                    収穫まで: 3ヶ月<br>
+                                    基本売値: 450 G<br>
+                                    <div class="action-button market-button">この種を植える</div>
+                                </div>
+                                <div class="item-slot">
+                                    タマネギ 🧅<br>
+                                    価格: 150 G<br>
+                                    収穫まで: 4ヶ月<br>
+                                    基本売値: 550 G<br>
+                                    <div class="action-button market-button">この種を植える</div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div id="content-note" class="tab-content">
-                        <div class="market-content-box">
+                        <div class="side-panel-box">
                             <div class="item-grid">
-                                <div class="item-slot">
-                                    トマト 🍅<br>
-                                    価格: 12 G<br>
-                                    収穫まで: 3ヶ月<br>
-                                    <div class="action-button note-button">1ヶ月で〇〇 G</div>
+                                <div class="item-slot note-slot">
+                                    <h4>レタス 🥬</h4>
+                                    <p>・期間リスク: **最短**で回収可能（最も機動性が高い）</p>
+                                    <p>・価格リスク: **暴落幅が最大** (-50%〜+35%)</p>
+                                    <textarea class="memo-note" placeholder="戦略メモや利益の計算を入力してください"></textarea>
                                 </div>
-                                <div class="item-slot"></div>
-                                <div class="item-slot"></div>
-                                <div class="item-slot"></div>
+                                <div class="item-slot note-slot">
+                                    <h4>ニンジン 🥕</h4>
+                                    <p>・期間リスク: **短期**で安全に資金を回す繋ぎ</p>
+                                    <p>・価格リスク: **最も安定**（±10%）</p>
+                                    <textarea class="memo-note" placeholder="戦略メモや利益の計算を入力してください"></textarea>
+                                </div>
+                                <div class="item-slot note-slot">
+                                    <h4>トマト 🍅</h4>
+                                    <p>・期間リスク: **3ヶ月間**ロック（好機を逃すコスト大）</p>
+                                    <p>・価格リスク: **価格変動幅が大きい**（±35%）</p>
+                                    <textarea class="memo-note" placeholder="戦略メモや利益の計算を入力してください"></textarea>
+                                </div>
+                                <div class="item-slot note-slot">
+                                    <h4>タマネギ 🧅</h4>
+                                    <p>・期間リスク: **最長**で資金をロック（最大の機会損失）</p>
+                                    <p>・価格リスク: **安定**（±10%）</p>
+                                    <textarea class="memo-note" placeholder="戦略メモや利益の計算を入力してください"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div id="content-price" class="tab-content">
-                        <div class="market-content-box price-chart-box">
+                        <div class="side-panel-box price-chart-box">
                             価格変動 チャート
                         </div>
                     </div>
@@ -74,6 +107,6 @@
             </div>
         </div>
     </div>
-
+    <script src="GAME.js"></script>
 </body>
 </html>

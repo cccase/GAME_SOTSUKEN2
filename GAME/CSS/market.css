@@ -87,7 +87,7 @@
 /* --- タブコンテンツ内のスタイル --- */
 
 /* コンテンツを囲む青い角丸の箱の共通スタイル */
-.market-content-box {
+.side-panel-box {
     width: 95%;
     height: 95%;
     background-color: #4682b4;
@@ -139,21 +139,56 @@
     font-size: 0.9em;
 }
 
-/* マーケット画面のボタン (緑色) */
+/* マーケット画面*/
+/* ------------------------------------------------------ */
+
 .market-button {
     background-color: #55a839;
     /* 緑色 */
 }
 
-/* ノート画面のボタン (灰色/白色) */
-.note-button {
-    background-color: #f0f0f0;
-    /* 枠の色に近い */
-    border: 1px solid #ccc;
-    color: #333;
+/* ノート画面 */
+/* ------------------------------------------------------ */
+
+
+/* ノートタブ用のアイテムスロットの調整 */
+.item-slot.note-slot {
+    /* メモ入力用に、テキストを左寄せ、レイアウトを調整 */
+    text-align: left;
+    padding: 3px;
+    font-size: 0.7em;
+}
+
+.item-slot.note-slot h4 {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.item-slot.note-slot p {
+    align-items: flex-start;
+    font-size: 0.7em;
+    margin: 2px 0;
+}
+
+/* プレイヤーのメモ入力エリア */
+.memo-note {
+    width: 100%;
+    height: 100px;
+    /* 初期高さを設定 */
+    flex-grow: 1;
+    /* 残りのスペースを埋める */
+    margin-top: 8px;
+    border: 1px solid #777;
+    padding: 5px;
+    font-size: 0.85em;
+    resize: none;
+    /* ユーザーによるサイズ変更を禁止 */
+    box-sizing: border-box;
 }
 
 /* 相場（価格）チャートエリアのスタイル */
+/* ------------------------------------------------------ */
+
 .price-chart-box {
     background-color: #f0f0f0;
     /* 内側は灰色 */
