@@ -230,3 +230,19 @@
     background-color: #e0e0e0;
     border-radius: 5px;
 }
+
+/* 個別アイテムスロットのスタイル */
+.item-slot {
+    background-color: white;
+    /* ... (中略) ... */
+    padding: 5px;
+    text-align: center;
+    border: 2px solid white; /* 選択状態の枠線が見えるように変更 */
+}
+
+/* [新規] 選択されたアイテムスロットのスタイル */
+.item-slot.selected {
+    background-color: #e6ffe6; /* 薄い緑色など、選択されたことがわかる色 */
+    border: 2px solid #55a839; /* market-buttonと同じ緑の枠線 */
+    transform: scale(1.03); /* 少し大きくして強調 */
+}
