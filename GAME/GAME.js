@@ -170,11 +170,13 @@ function handlePlotClick(event) {
 
         // 収穫実行
         const cropId = plotData.cropId;
-        const currentPrice = gameData.priceHistory[cropId][gameData.month - 1];
+
+        // 【修正】現在の売却価格を取得。配列の長さが月数と一致しないため、
+        // 必ず配列の最後の要素（最新の価格）を取得する
+        const currentPrice = gameData.priceHistory[cropId][gameData.priceHistory[cropId].length - 1];
 
         if (currentPrice === undefined) {
-            // エラー対策: 最初の月で価格が取得できない場合など
-            alert('価格データが不正です。収穫を中止します。'); // このアラートは残します
+            alert('価格データが不正です。収穫を中止します。');
             return;
         }
 
@@ -370,7 +372,9 @@ function generateMonthlyPrice(cropId) {
 
 // グラフ描画データを作成 (変更なし)
 function getChartData() {
-    const labels = Array.from({ length: gameData.month }, (_, i) => `${i + 1}ヶ月目`);
+    // 【修正】ラベルは、データが記録されている月（奇数月）のみ生成する
+    // 例: gameData.month=4 のとき、配列長は2。ラベルは '1ヶ月目', '3ヶ月目' となる。
+    const labels = Array.from({ length: Math.ceil(gameData.month / 2) }, (_, i) => `${(i * 2) + 1}ヶ月目`);
     const datasets = [];
 
     for (const cropId in gameData.priceHistory) {
@@ -457,7 +461,7 @@ function renderPriceChart() {
 }
 
 // --- イベントリスナーと初期化 ---
-
+/* すべての月をプロット
 if (nextMonthBtn) {
     nextMonthBtn.addEventListener('click', () => {
         gameData.month++;
@@ -495,6 +499,44 @@ if (nextMonthBtn) {
 
         // 【新規追加】畑の表示を更新 (成長状態を反映させる)
         renderFarmPlots();
+    });
+}*/
+// GAME.js の nextMonthBtn.addEventListener 内
+
+if (nextMonthBtn) {
+    nextMonthBtn.addEventListener('click', () => {
+        gameData.month++;
+
+        // 奇数月に価格が変動するように変更
+        const shouldFluctuate = (gameData.month % 2 !== 0);
+
+        // 価格データの更新
+        for (const cropId in gameData.priceHistory) {
+            const history = gameData.priceHistory[cropId];
+
+            if (shouldFluctuate) {
+                const newPrice = generateMonthlyPrice(cropId);
+                history.push(newPrice); // ★ 奇数月のみ新しい価格をプッシュ ★
+            }
+            // 偶数月はプッシュしない (データ配列に空きができる)
+        }
+
+        // 畑の選択状態をリセット (月を跨いだら植え付け/収穫モードを解除)
+        selectedSeed = null;
+        isHarvesting = false;
+        document.querySelectorAll('.market-button').forEach(btn => btn.classList.remove('selected'));
+        HARVEST_BUTTON?.classList.remove('active');
+        FARM_BOX?.classList.remove('planting-mode');
+
+        // 情報パネルを更新
+        updateInfoPanel();
+
+        // グラフを更新
+        renderPriceChart();
+
+        // 【新規追加】畑の表示を更新 (成長状態を反映させる)
+        renderFarmPlots();
+
     });
 }
 
