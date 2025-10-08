@@ -372,9 +372,28 @@ function generateMonthlyPrice(cropId) {
 
 // グラフ描画データを作成 (変更なし)
 function getChartData() {
-    // 【修正】ラベルは、データが記録されている月（奇数月）のみ生成する
-    // 例: gameData.month=4 のとき、配列長は2。ラベルは '1ヶ月目', '3ヶ月目' となる。
-    const labels = Array.from({ length: Math.ceil(gameData.month / 2) }, (_, i) => `${(i * 2) + 1}ヶ月目`);
+    const numDataPoints = gameData.priceHistory.lettuce.length;
+
+    // 【修正】ラベルをデータ配列の長さに基づき、現在の月を基準に相対的な奇数月として生成する
+    const labels = Array.from({ length: numDataPoints }, (_, i) => {
+        // i: 0 (最古データ) から numDataPoints - 1 (最新データ) まで
+        
+        const currentMonth = gameData.month; // 1, 3, 5...
+        
+        // 配列の最新のインデックスと現在の月の位置関係を計算
+        const diffIndex = numDataPoints - 1; 
+        
+        // データが奇数月のみなので 2倍
+        const month = currentMonth + (i - diffIndex) * 2; 
+
+        // ラベルが1ヶ月目未満の場合はマイナス表示、それ以外はそのまま
+        if (month < 1) {
+             return `${month}ヶ月目`;
+        } else {
+             return `${month}ヶ月目`;
+        }
+    });
+    
     const datasets = [];
 
     for (const cropId in gameData.priceHistory) {
@@ -532,7 +551,9 @@ if (nextMonthBtn) {
         updateInfoPanel();
 
         // グラフを更新
-        renderPriceChart();
+        if (shouldFluctuate) {
+             renderPriceChart();
+        }
 
         // 【新規追加】畑の表示を更新 (成長状態を反映させる)
         renderFarmPlots();
@@ -542,13 +563,27 @@ if (nextMonthBtn) {
 
 // ゲームとグラフの初期化
 document.addEventListener('DOMContentLoaded', () => {
-    // 1ヶ月目の初期価格データを生成
+    // 【修正】ゲーム開始前に6回分の過去価格データをランダムに生成（合計7データポイント、-11ヶ月目から1ヶ月目まで）
+    const PAST_HISTORY_COUNT = 6;
+
+    // 過去の価格変動をランダムに生成し、履歴に追加
+    for (let i = 0; i < PAST_HISTORY_COUNT; i++) {
+        for (const cropId in gameData.priceHistory) {
+            // ベース価格からのランダム変動を使用し、過去価格を生成
+            const newPrice = generateMonthlyPrice(cropId);
+            gameData.priceHistory[cropId].push(newPrice);
+        }
+    }
+
+    // 1ヶ月目の初期価格データを生成 (最新データとして追加)
+    // generateMonthlyPriceを使い、最新の1ヶ月目の価格を生成します。
     for (const cropId in gameData.priceHistory) {
-        gameData.priceHistory[cropId].push(PRICE_BASE[cropId].basePrice);
+        const newPrice = generateMonthlyPrice(cropId);
+        gameData.priceHistory[cropId].push(newPrice);
     }
 
     updateInfoPanel(); // 初期情報の表示
-    updateCurrentPrices(); // 【新規追加】初期価格の表示
+    updateCurrentPrices(); // 初期価格の表示
 
     // 相場タブがクリックされた時にグラフを再描画する処理を追加
     const tabPriceBtn = document.getElementById('tab-price');

@@ -45,12 +45,8 @@
 }
 
 .tab-button.active {
-    background-color: #00ff00;
-    /* アクティブなタブの色 */
-    border-bottom: none;
-    /* 下の線を消して、コンテンツと一体化させる表現 */
-    position: relative;
-    z-index: 10;
+    background-color: #a6ff00;
+
 }
 
 #side-panel-content {
