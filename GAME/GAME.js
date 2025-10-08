@@ -338,7 +338,37 @@ function updateCurrentPrices() {
         }
     }
 }
+// 【新規追加】現在の価格を相場タブに表示する関数
+function updateCurrentPrices() {
+    for (const cropId in gameData.priceHistory) {
+        const history = gameData.priceHistory[cropId];
+        const lastPrice = history[history.length - 1]; // 最後の要素が現在の価格
+        const cropName = PRICE_BASE[cropId].label;
 
+        // HTML要素のIDを動的に生成 (lettuce, carrot, tomato, onion)
+        // HTMLのIDは price-lettuce, price-carrot, ... に変更されているため、IDを調整
+        let elementId;
+        if (cropId === 'lettuce') elementId = 'price-lettuce';
+        else if (cropId === 'carrot') elementId = 'price-carrot';
+        else if (cropId === 'tomato') elementId = 'price-tomato';
+        else if (cropId === 'onion') elementId = 'price-onion';
+
+        // 1. 相場タブの価格要素を更新
+        const priceElement = document.getElementById(elementId);
+
+        if (priceElement && lastPrice !== undefined) {
+            priceElement.textContent = `${cropName}: ${lastPrice} G`;
+        }
+
+        // 2. 【拡張】ノートタブの価格要素を更新
+        // IDは 'note-price-lettuce' など
+        const noteElement = document.getElementById(`note-${elementId}`);
+
+        if (noteElement && lastPrice !== undefined) {
+            noteElement.textContent = `今の売値：${lastPrice} G`;
+        }
+    }
+}
 
 // 価格をランダムに変動させて計算 (2ヶ月に一度のみ呼ばれる)
 function generateMonthlyPrice(cropId) {

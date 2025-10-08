@@ -19,7 +19,8 @@
 
         <div id="main-content">
             <div id="farm-area">
-                <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
+                <div
+                    style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
                     <button id="farm-button" class="action-button">収穫</button>
                     <button id="next-month-button" class="action-button">次の月へ</button>
                 </div>
@@ -76,31 +77,30 @@
                                 <div class="item-slot note-slot">
                                     <h4>レタス 🥬</h4>
                                     <p>価格が大きく変わる！</p>
-                                    <p>今の売値：</p>
+                                    <p id="note-price-lettuce">今の売値：--- G</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                                 <div class="item-slot note-slot">
                                     <h4>ニンジン 🥕</h4>
                                     <p>一番安定！</p>
-                                    <p>今の売値：</p>
+                                    <p id="note-price-carrot">今の売値：--- G</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                                 <div class="item-slot note-slot">
                                     <h4>トマト 🍅</h4>
                                     <p>価格が下がりやすいかも</p>
-                                    <p>今の売値：</p>
+                                    <p id="note-price-tomato">今の売値：--- G</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                                 <div class="item-slot note-slot">
                                     <h4>タマネギ 🧅</h4>
                                     <p>ゆっくり安全に！</p>
-                                    <p>今の売値：</p>
+                                    <p id="note-price-onion">今の売値：--- G</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div id="content-price" class="tab-content">
                         <div class="side-panel-box price-chart-box">
                             <div id="chart-container"
