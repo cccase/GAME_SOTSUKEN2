@@ -200,38 +200,29 @@ function handlePlotClick(event) {
     }
 }
 
-
 /**
- * マーケットの種ボタンクリック時の処理 (トグル式に変更)
+ * マーケットの種ボタンクリック時の処理
  */
 function handleSeedButtonClick(event) {
-    // ボタンではなく、親のitem-slot要素を取得
-    const slotElement = event.currentTarget.closest('.item-slot');
-    const buttonId = event.currentTarget.id;
-    const cropId = getCropIdFromSeedButtonId(buttonId);
-
-    // すべてのスロットから選択状態を解除
-    document.querySelectorAll('.item-slot').forEach(slot => {
-        slot.classList.remove('selected');
-    });
-
-    // 収穫モードを解除
-    isHarvesting = false;
-    HARVEST_BUTTON.classList.remove('active');
+    const button = event.currentTarget;
+    const slotElement = button.closest('.item-slot');
+    const cropId = getCropIdFromSeedButtonId(button.id);
 
     if (selectedSeed === cropId) {
-        // 同じ種を再クリック -> 選択解除（トグル）
         selectedSeed = null;
+        slotElement.classList.remove('selected');
         FARM_BOX.classList.remove('planting-mode');
-        // アラートを削除
     } else {
-        // 新しい種を選択
         selectedSeed = cropId;
+        isHarvesting = false;
+        document.querySelectorAll('.item-slot').forEach(slot => slot.classList.remove('selected'));
+        HARVEST_BUTTON.classList.remove('active');
+
         slotElement.classList.add('selected');
         FARM_BOX.classList.add('planting-mode');
-        // アラートを削除: alert(`${PRICE_BASE[cropId].label}の種が選択されました。畑の空き地をクリックして植えてください。`);
     }
 }
+
 
 /**
  * 収穫ボタンクリック時の処理
@@ -240,57 +231,6 @@ function handleHarvestClick() {
     // 種まきモードを解除
     selectedSeed = null;
     document.querySelectorAll('.item-slot').forEach(slot => slot.classList.remove('selected'));
-    FARM_BOX.classList.remove('planting-mode');
-
-    if (isHarvesting) {
-        // 再クリックで収穫モードを解除（トグル）
-        isHarvesting = false;
-        HARVEST_BUTTON.classList.remove('active');
-        // アラートを削除: alert('収穫モードを解除しました。');
-    } else {
-        // 収穫モードに切り替え
-        isHarvesting = true;
-        HARVEST_BUTTON.classList.add('active');
-        // アラートを削除: alert('収穫モードを開始しました。収穫可能なマスをクリックしてください。');
-    }
-}
-
-
-
-/**
- * マーケットの種ボタンクリック時の処理
- */
-function handleSeedButtonClick(event) {
-    const button = event.currentTarget;
-    const cropId = getCropIdFromSeedButtonId(button.id);
-
-    if (selectedSeed === cropId) {
-        // 同じ種を再クリック -> 選択解除
-        selectedSeed = null;
-        button.classList.remove('selected');
-        FARM_BOX.classList.remove('planting-mode');
-    } else {
-        // 新しい種を選択
-        selectedSeed = cropId;
-        isHarvesting = false; // 収穫モードを解除
-
-        // すべてのボタンの選択状態を解除
-        document.querySelectorAll('.market-button').forEach(btn => btn.classList.remove('selected'));
-        HARVEST_BUTTON.classList.remove('active');
-
-        // クリックしたボタンを選択状態に
-        button.classList.add('selected');
-        FARM_BOX.classList.add('planting-mode');
-    }
-}
-
-/**
- * 収穫ボタンクリック時の処理
- */
-function handleHarvestClick() {
-    // 種まきモードを解除
-    selectedSeed = null;
-    document.querySelectorAll('.market-button').forEach(btn => btn.classList.remove('selected'));
     FARM_BOX.classList.remove('planting-mode');
 
     if (isHarvesting) {
@@ -522,7 +462,7 @@ if (nextMonthBtn) {
     nextMonthBtn.addEventListener('click', () => {
         gameData.month++;
 
-        const shouldFluctuate = (gameData.month % 2 === 0);
+        const shouldFluctuate = (gameData.month % 2 !== 0);
 
         // 価格データの更新
         for (const cropId in gameData.priceHistory) {
