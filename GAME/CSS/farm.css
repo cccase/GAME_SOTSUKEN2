@@ -130,3 +130,7 @@
     border: 2px solid #e67e22;
     box-shadow: 0 0 8px rgba(243, 156, 18, 1); /* 目立つように影を付ける */
 }
+
+.farm-plot.ready-to-harvest{
+    border: #fdf900 solid 2px;
+}
