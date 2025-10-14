@@ -52,7 +52,24 @@ html {
     margin: 0 1%;
     min-width: 150px;
     /* 最小幅を設定してつぶれすぎないように */
-    height: 50px;
+    min-height: 50px;
+}
+
+#option-box.ui-box {
+    flex-grow: 0;
+    min-width: 0px;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    /* 画像を表示 */
+    background-image: url('../Images/haguruma_icon-pit.png');
+    background-size: 80%;
+    /* 画像をbox内で適切に表示 */
+    background-repeat: no-repeat;
+    background-position: center;
+    /* テキストは不要なので非表示 */
+    text-indent: -9999px;
+    /* カーソルをポインタに変更 */
+    cursor: pointer;
 }
 
 /* --- メインコンテンツ（畑とマーケット）のスタイル --- */
