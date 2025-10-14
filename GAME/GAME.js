@@ -509,47 +509,6 @@ function renderPriceChart() {
     updateCurrentPrices();
 }
 
-// --- イベントリスナーと初期化 ---
-/* すべての月をプロット
-if (nextMonthBtn) {
-    nextMonthBtn.addEventListener('click', () => {
-        gameData.month++;
-
-        const shouldFluctuate = (gameData.month % 2 !== 0);
-
-        // 価格データの更新
-        for (const cropId in gameData.priceHistory) {
-            const history = gameData.priceHistory[cropId];
-
-            if (shouldFluctuate) {
-                const newPrice = generateMonthlyPrice(cropId);
-                history.push(newPrice);
-            } else {
-                if (history.length > 0) {
-                    history.push(history[history.length - 1]);
-                } else {
-                    history.push(PRICE_BASE[cropId].basePrice);
-                }
-            }
-        }
-
-        // 畑の選択状態をリセット (月を跨いだら植え付け/収穫モードを解除)
-        selectedSeed = null;
-        isHarvesting = false;
-        document.querySelectorAll('.market-button').forEach(btn => btn.classList.remove('selected'));
-        HARVEST_BUTTON?.classList.remove('active');
-        FARM_BOX?.classList.remove('planting-mode');
-
-        // 情報パネルを更新
-        updateInfoPanel();
-
-        // グラフを更新
-        renderPriceChart();
-
-        // 【新規追加】畑の表示を更新 (成長状態を反映させる)
-        renderFarmPlots();
-    });
-}*/
 // GAME.js の nextMonthBtn.addEventListener 内
 
 if (nextMonthBtn) {
@@ -572,10 +531,11 @@ if (nextMonthBtn) {
 
         // 畑の選択状態をリセット (月を跨いだら植え付け/収穫モードを解除)
         selectedSeed = null;
-        isHarvesting = false;
-        document.querySelectorAll('.market-button').forEach(btn => btn.classList.remove('selected'));
-        HARVEST_BUTTON?.classList.remove('active');
+        isHarvesting = true; // 収穫モードをデフォルトに変更
+        document.querySelectorAll('.item-slot').forEach(btn => btn.classList.remove('selected'));
+        HARVEST_BUTTON?.classList.add('active');
         FARM_BOX?.classList.remove('planting-mode');
+        
 
         // 情報パネルを更新
         updateInfoPanel();
@@ -632,7 +592,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initFarmGrid();
 
     // 種まきボタンのイベントリスナー設定
-    document.querySelectorAll('.market-button').forEach(button => {
+    document.querySelectorAll('.item-slot').forEach(button => {
         // 注意: ボタンではなく、親のスロット全体をクリックで反応させたい場合はここを変える必要があります。
         // 今回はボタンクリックでモードに入る前提で、ロジックのみ変更します。
         button.addEventListener('click', handleSeedButtonClick);
