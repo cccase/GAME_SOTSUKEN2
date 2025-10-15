@@ -44,6 +44,7 @@ html {
     /* 色は無視するとのことですが、境界線として */
     text-align: center;
     font-weight: bold;
+    font-size: 200%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,6 +86,7 @@ html {
 
 /* ボタンの共通スタイル */
 .action-button {
+    cursor: pointer;
     padding: 5px 10px;
     border-radius: 5px;
     margin-top: 5px;
