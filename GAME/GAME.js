@@ -46,6 +46,8 @@ const HARVEST_BUTTON = document.getElementById('farm-button');
 // 畑の選択状態
 let selectedSeed = null; // 選択中の種ID (例: 'lettuce')
 let isHarvesting = false; // 収穫モードかどうか
+let isMouseDown = false; 
+let isDragging = false;
 
 /**
  * 種ボタンのIDからPRICE_BASEに対応する作物IDを取得するヘルパー関数
@@ -61,7 +63,7 @@ function getCropIdFromSeedButtonId(buttonId) {
 }
 
 /**
- * 畑のマス目のDOMを生成し、クリックイベントを設定する
+ * 畑のマス目のDOMを生成し、クリック/ドラッグイベントを設定する
  */
 function initFarmGrid() {
     FARM_BOX.style.gridTemplateColumns = `repeat(${FARM_SIZE}, 1fr)`;
@@ -71,15 +73,69 @@ function initFarmGrid() {
         const plot = document.createElement('div');
         plot.classList.add('farm-plot');
         plot.dataset.index = i;
-        plot.addEventListener('click', handlePlotClick);
+
+        // 💥 変更点: mousedownがクリックとドラッグ開始の両方を担当 💥
+
+        // 1. クリック開始 または ドラッグ開始 (PC)
+        plot.addEventListener('mousedown', (event) => {
+            // 左クリック以外は無視
+            if (event.button !== 0) return; 
+            
+            isMouseDown = true;
+            // 押した瞬間に、まずそのマスでアクションを実行（クリック操作とドラッグ開始）
+            handlePlotClick(event); 
+        });
+
+        // 2. ドラッグ中の連続実行 (PC)
+        plot.addEventListener('mouseover', (event) => {
+            // マウスボタンが押されたまま（isMouseDown）マスに入ったら
+            if (isMouseDown) {
+                // アクションを実行
+                handlePlotClick(event);
+            }
+        });
+
         FARM_BOX.appendChild(plot);
     }
+    
+    // 3. ドラッグ終了 (PC)
+    // マウスボタンが上がったら、押された状態を解除
+    document.addEventListener('mouseup', () => {
+        isMouseDown = false;
+    });
 
-    // 農園ゲームではCSSでマス目を表現するため、ここでのテキストは不要
-    // <div style="font-size: 0.4em;">10 x 10</div> はGAME.htmlから削除するか、
-    // farm-boxの初期子要素として設定してください。
+    // 4. モバイル対応 (タッチイベント)
+    FARM_BOX.addEventListener('touchstart', (event) => {
+        isMouseDown = true;
+        event.preventDefault(); // スクロールを防ぐ
+        
+        // 最初のタッチ要素がマスなら、クリック処理を実行
+        const targetPlot = event.touches[0].target.closest('.farm-plot');
+        if (targetPlot) {
+             handlePlotClick({ currentTarget: targetPlot });
+        }
+    }, { passive: false }); // スクロール防止のため passive: false を指定
+
+    // 5. ドラッグ中の連続実行 (モバイル)
+    FARM_BOX.addEventListener('touchmove', (event) => {
+        if (!isMouseDown) return;
+        event.preventDefault(); // スクロールを防ぐ
+
+        const touch = event.touches[0];
+        // 座標からDOM要素を取得
+        const element = document.elementFromPoint(touch.clientX, touch.clientY);
+        const targetPlot = element ? element.closest('.farm-plot') : null;
+
+        if (targetPlot) {
+            handlePlotClick({ currentTarget: targetPlot });
+        }
+    }, { passive: false }); // スクロール防止のため passive: false を指定
+
+    // 6. ドラッグ終了 (モバイル)
+    document.addEventListener('touchend', () => {
+        isMouseDown = false;
+    });
 }
-
 /**
  * 畑のマス目の表示を更新する
  * @param {HTMLElement} plotElement - マス目のDOM要素
@@ -106,10 +162,10 @@ function updatePlotDisplay(plotElement, plotData) {
         if (isReady) {
             // 収穫可能
             plotElement.classList.add('ready-to-harvest');
-            plotElement.textContent = '収穫可能';
+            plotElement.textContent = '完成！';
         } else {
             // 生育中
-            plotElement.innerHTML = `${base.label}<br>(${remainingMonths}M)`;
+            plotElement.innerHTML = `${base.label}<br>(${remainingMonths})`;
         }
     } else {
         // 何も植えられていない
@@ -132,7 +188,9 @@ function renderFarmPlots() {
  */
 function handlePlotClick(event) {
     const plotElement = event.currentTarget;
+    if (!plotElement || !plotElement.dataset) return; // ターゲット要素やdatasetがない場合は早期リターン
     const index = parseInt(plotElement.dataset.index);
+    if (isNaN(index)) return; // インデックスが不正な場合は早期リターン
     const plotData = gameData.farmPlots[index];
 
     // 1. 種まきモード
@@ -405,7 +463,7 @@ function getChartData() {
         if (monthsAgo === 0) {
             return '今'; // 現在の月
         } else {
-            return `${monthsAgo}ヶ月まえ`;
+            return `${monthsAgo}ヶ月前`;
         }
     });
 
