@@ -203,23 +203,33 @@ function handlePlotClick(event) {
 }
 
 /**
- * マーケットの種ボタンクリック時の処理
+ * マーケットのアイテムスロットクリック時の処理 (ボタンではなくスロット全体に適用)
  */
-function handleSeedButtonClick(event) {
-    const button = event.currentTarget;
-    const slotElement = button.closest('.item-slot');
-    const cropId = getCropIdFromSeedButtonId(button.id);
+function handleItemSlotClick(event) {
+    // クリックされた要素がボタンかスロットかに関わらず、親の .item-slot を取得する
+    // HTMLが <button class="item-slot"> に変更されたため、event.currentTargetを使用
+    const slotElement = event.currentTarget; 
+    if (!slotElement || !slotElement.id.startsWith('seed-button')) return;
 
+    // IDはボタンから取得する
+    const cropId = getCropIdFromSeedButtonId(slotElement.id);
+
+    // 選択状態の切り替えロジック
     if (selectedSeed === cropId) {
+        // 現在選択中の種と同じなら、選択解除
         selectedSeed = null;
         slotElement.classList.remove('selected');
         FARM_BOX.classList.remove('planting-mode');
     } else {
+        // 新しい種を選択
         selectedSeed = cropId;
         isHarvesting = false;
+        
+        // 他のスロットの選択状態と収穫モードを解除
         document.querySelectorAll('.item-slot').forEach(slot => slot.classList.remove('selected'));
         HARVEST_BUTTON.classList.remove('active');
 
+        // このスロットを選択状態にし、畑を植え付けモードにする
         slotElement.classList.add('selected');
         FARM_BOX.classList.add('planting-mode');
     }
@@ -312,7 +322,8 @@ function updateInfoPanel() {
     const seasons = ['春', '春', '春', '夏', '夏', '夏', '秋', '秋', '秋', '冬', '冬', '冬'];
     gameData.season = seasons[monthIndexInYear];
 
-    moneyDisplay.textContent = `${gameData.money} ゴールド`;
+    // 変更: おかね -> 円
+    moneyDisplay.textContent = `${gameData.money} 円`;
     dateDisplay.textContent = `${gameData.month}ヶ月目 ${gameData.season}`;
 }
 
@@ -331,33 +342,12 @@ function updateCurrentPrices() {
         else if (cropId === 'tomato') elementId = 'price-tomato';
         else if (cropId === 'onion') elementId = 'price-onion';
 
+        // 1. ねだんタブの価格要素を更新
         const priceElement = document.getElementById(elementId);
 
         if (priceElement && lastPrice !== undefined) {
-            priceElement.textContent = `${cropName}: ${lastPrice} G`;
-        }
-    }
-}
-// 【新規追加】現在の価格を相場タブに表示する関数
-function updateCurrentPrices() {
-    for (const cropId in gameData.priceHistory) {
-        const history = gameData.priceHistory[cropId];
-        const lastPrice = history[history.length - 1]; // 最後の要素が現在の価格
-        const cropName = PRICE_BASE[cropId].label;
-
-        // HTML要素のIDを動的に生成 (lettuce, carrot, tomato, onion)
-        // HTMLのIDは price-lettuce, price-carrot, ... に変更されているため、IDを調整
-        let elementId;
-        if (cropId === 'lettuce') elementId = 'price-lettuce';
-        else if (cropId === 'carrot') elementId = 'price-carrot';
-        else if (cropId === 'tomato') elementId = 'price-tomato';
-        else if (cropId === 'onion') elementId = 'price-onion';
-
-        // 1. 相場タブの価格要素を更新
-        const priceElement = document.getElementById(elementId);
-
-        if (priceElement && lastPrice !== undefined) {
-            priceElement.textContent = `${cropName}: ${lastPrice} G`;
+            // 変更: G -> 円
+            priceElement.textContent = `${cropName}: ${lastPrice} 円`;
         }
 
         // 2. 【拡張】ノートタブの価格要素を更新
@@ -365,7 +355,8 @@ function updateCurrentPrices() {
         const noteElement = document.getElementById(`note-${elementId}`);
 
         if (noteElement && lastPrice !== undefined) {
-            noteElement.textContent = `今の売値：${lastPrice} G`;
+            // 変更: いまのねだん：... おかね -> いまのねだん：... 円
+            noteElement.textContent = `いまのねだん：${lastPrice} 円`;
         }
     }
 }
@@ -403,24 +394,18 @@ function generateMonthlyPrice(cropId) {
 // グラフ描画データを作成 (変更なし)
 function getChartData() {
     const numDataPoints = gameData.priceHistory.lettuce.length;
+    // 最新のデータポイントのインデックス
+    const latestIndex = numDataPoints - 1;
 
-    // 【修正】ラベルをデータ配列の長さに基づき、現在の月を基準に相対的な奇数月として生成する
+    // 【修正】ラベルを現在の月を基準に相対的な「〇〇ヶ月まえ」として生成する
     const labels = Array.from({ length: numDataPoints }, (_, i) => {
-        // i: 0 (最古データ) から numDataPoints - 1 (最新データ) まで
+        // 最新インデックスからの差分を2倍（2ヶ月間隔のため）
+        const monthsAgo = (latestIndex - i) * 2; 
 
-        const currentMonth = gameData.month; // 1, 3, 5...
-
-        // 配列の最新のインデックスと現在の月の位置関係を計算
-        const diffIndex = numDataPoints - 1;
-
-        // データが奇数月のみなので 2倍
-        const month = currentMonth + (i - diffIndex) * 2;
-
-        // ラベルが1ヶ月目未満の場合はマイナス表示、それ以外はそのまま
-        if (month < 1) {
-            return `${month}ヶ月目`;
+        if (monthsAgo === 0) {
+            return '今'; // 現在の月
         } else {
-            return `${month}ヶ月目`;
+            return `${monthsAgo}ヶ月まえ`;
         }
     });
 
@@ -467,20 +452,20 @@ function renderPriceChart() {
         maintainAspectRatio: false,
         title: {
             display: true,
-            text: '価格変動チャート (2ヶ月ごと更新)',
+            text: 'ねだんチャート',
             fontSize: 16
         },
         scales: {
             xAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: '月'
+                    labelString: '時間' 
                 }
             }],
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: '価格 (G)'
+                    labelString: 'ねだん (円)'
                 },
                 ticks: {
                     beginAtZero: false,
@@ -505,7 +490,7 @@ function renderPriceChart() {
         });
     }
 
-    // 【新規追加】グラフの更新後に現在の価格表示も更新する
+    // グラフの更新後に現在の価格表示も更新する
     updateCurrentPrices();
 }
 
@@ -531,9 +516,9 @@ if (nextMonthBtn) {
 
         // 畑の選択状態をリセット (月を跨いだら植え付け/収穫モードを解除)
         selectedSeed = null;
-        isHarvesting = true; // 収穫モードをデフォルトに変更
-        document.querySelectorAll('.item-slot').forEach(btn => btn.classList.remove('selected'));
-        HARVEST_BUTTON?.classList.add('active');
+        isHarvesting = true; // 変更: 次の月に進んだら収穫モードをデフォルトでオンにする
+        document.querySelectorAll('.item-slot').forEach(slot => slot.classList.remove('selected'));
+        HARVEST_BUTTON?.classList.add('active'); // 変更: 収穫ボタンをアクティブにする
         FARM_BOX?.classList.remove('planting-mode');
         
 
@@ -591,11 +576,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // 畑マス目の生成
     initFarmGrid();
 
-    // 種まきボタンのイベントリスナー設定
-    document.querySelectorAll('.item-slot').forEach(button => {
-        // 注意: ボタンではなく、親のスロット全体をクリックで反応させたい場合はここを変える必要があります。
-        // 今回はボタンクリックでモードに入る前提で、ロジックのみ変更します。
-        button.addEventListener('click', handleSeedButtonClick);
+    // 種まきボタンのイベントリスナー設定 (親スロット全体で反応するように変更)
+    document.querySelectorAll('.item-slot').forEach(slotElement => {
+        // market-button を含むスロット（マーケットアイテム）のみを対象とする
+        if (slotElement.querySelector('.market-button')) {
+            slotElement.addEventListener('click', handleItemSlotClick);
+        }
     });
 
     // 収穫ボタンのイベントリスナー設定

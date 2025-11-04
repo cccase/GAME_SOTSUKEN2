@@ -12,9 +12,9 @@
 
     <div id="slide-container">
         <div id="game-header">
-            <div id="title-box" class="ui-box">農園ゲーム（仮）</div>
+            <div id="title-box" class="ui-box">のうえんゲーム</div>
             <div id="date-box" class="ui-box">1ヶ月 目 春</div>
-            <div id="gold-box" class="ui-box">1000 ゴールド</div>
+            <div id="gold-box" class="ui-box">1000 円</div>
             <button id="option-box" class="ui-box"></button>
         </div>
 
@@ -22,7 +22,7 @@
             <div id="farm-area">
                 <div
                     style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 5px;">
-                    <button id="farm-button" class="action-button">収穫</button>
+                    <button id="farm-button" class="action-button">しゅうかく</button>
                     <button id="next-month-button" class="action-button">次の月へ</button>
                 </div>
                 <div id="farm-box">
@@ -33,7 +33,7 @@
                 <div id="side-panel-tabs">
                     <button id="tab-market" class="tab-button active">マーケット</button>
                     <button id="tab-note" class="tab-button">ノート</button>
-                    <button id="tab-price" class="tab-button">相場</button>
+                    <button id="tab-price" class="tab-button">ねだん</button>
                 </div>
                 <div id="side-panel-content">
 
@@ -42,31 +42,31 @@
                             <div class="item-grid">
                                 <button id="seed-button-letus" class="item-slot action-button">
                                     レタス 🥬<br>
-                                    価格: 50 G<br>
-                                    収穫まで: 1ヶ月<br>
-                                    基本売値: 160 G<br>
-                                    <div class="market-button action-button">この種を植える</div>
+                                    ねだん: 50 円<br>
+                                    しゅうかくまで: 1ヶ月<br>
+                                    いつものねだん: 160 円<br>
+                                    <div class="market-button action-button">このたねをうえる</div>
                                 </button>
                                 <button id="seed-button-carot" class="item-slot action-button">
                                     ニンジン 🥕<br>
-                                    価格: 100 G<br>
-                                    収穫まで: 2ヶ月<br>
-                                    基本売値: 280 G<br>
-                                    <div class="market-button action-button">この種を植える</div>
+                                    ねだん: 100 円<br>
+                                    しゅうかくまで: 2ヶ月<br>
+                                    いつものねだん: 280 円<br>
+                                    <div class="market-button action-button">このたねをうえる</div>
                                 </button>
                                 <button id="seed-button-tomato" class="item-slot action-button">
                                     トマト 🍅<br>
-                                    価格: 120 G<br>
-                                    収穫まで: 3ヶ月<br>
-                                    基本売値: 450 G<br>
-                                    <div class="market-button action-button">この種を植える</div>
+                                    ねだん: 120 円<br>
+                                    しゅうかくまで: 3ヶ月<br>
+                                    いつものねだん: 450 円<br>
+                                    <div class="market-button action-button">このたねをうえる</div>
                                 </button>
                                 <button id="seed-button-onion" class="item-slot action-button">
                                     タマネギ 🧅<br>
-                                    価格: 150 G<br>
-                                    収穫まで: 4ヶ月<br>
-                                    基本売値: 550 G<br>
-                                    <div class="market-button action-button">この種を植える</div>
+                                    ねだん: 150 円<br>
+                                    しゅうかくまで: 4ヶ月<br>
+                                    いつものねだん: 550 円<br>
+                                    <div class="market-button action-button">このたねをうえる</div>
                                 </button>
                             </div>
                         </div>
@@ -77,26 +77,26 @@
                             <div class="item-grid">
                                 <div class="item-slot note-slot">
                                     <h4>レタス 🥬</h4>
-                                    <p>価格が大きく変わる！</p>
-                                    <p id="note-price-lettuce">今の売値：--- G</p>
+                                    <p>ねだんが大きく変わる！</p>
+                                    <p id="note-price-lettuce">いまのねだん：--- 円</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                                 <div class="item-slot note-slot">
                                     <h4>ニンジン 🥕</h4>
-                                    <p>一番安定！</p>
-                                    <p id="note-price-carrot">今の売値：--- G</p>
+                                    <p>いちばん安定！</p>
+                                    <p id="note-price-carrot">いまのねだん：--- 円</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                                 <div class="item-slot note-slot">
                                     <h4>トマト 🍅</h4>
-                                    <p>価格が下がりやすいかも</p>
-                                    <p id="note-price-tomato">今の売値：--- G</p>
+                                    <p>ねだんが下がりやすいかも</p>
+                                    <p id="note-price-tomato">いまのねだん：--- 円</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                                 <div class="item-slot note-slot">
                                     <h4>タマネギ 🧅</h4>
                                     <p>ゆっくり安全に！</p>
-                                    <p id="note-price-onion">今の売値：--- G</p>
+                                    <p id="note-price-onion">いまのねだん：--- 円</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                             </div>
@@ -110,10 +110,10 @@
                             </div>
 
                             <div id="current-prices-container">
-                                <div id="price-lettuce" class="current-price-item">レタス: --- G</div>
-                                <div id="price-carrot" class="current-price-item">ニンジン: --- G</div>
-                                <div id="price-tomato" class="current-price-item">トマト: --- G</div>
-                                <div id="price-onion" class="current-price-item">タマネギ: --- G</div>
+                                <div id="price-lettuce" class="current-price-item">レタス: --- 円</div>
+                                <div id="price-carrot" class="current-price-item">ニンジン: --- 円</div>
+                                <div id="price-tomato" class="current-price-item">トマト: --- 円</div>
+                                <div id="price-onion" class="current-price-item">タマネギ: --- 円</div>
                             </div>
                         </div>
                     </div>
