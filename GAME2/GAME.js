@@ -46,7 +46,7 @@ const HARVEST_BUTTON = document.getElementById('farm-button');
 // 畑の選択状態
 let selectedSeed = null; // 選択中の種ID (例: 'lettuce')
 let isHarvesting = false; // 収穫モードかどうか
-let isMouseDown = false;
+let isMouseDown = false; 
 let isDragging = false;
 
 // 終了のフラグ
@@ -83,11 +83,11 @@ function initFarmGrid() {
         // 1. クリック開始 または ドラッグ開始 (PC)
         plot.addEventListener('mousedown', (event) => {
             // 左クリック以外は無視
-            if (event.button !== 0) return;
-
+            if (event.button !== 0) return; 
+            
             isMouseDown = true;
             // 押した瞬間に、まずそのマスでアクションを実行（クリック操作とドラッグ開始）
-            handlePlotClick(event);
+            handlePlotClick(event); 
         });
 
         // 2. ドラッグ中の連続実行 (PC)
@@ -101,7 +101,7 @@ function initFarmGrid() {
 
         FARM_BOX.appendChild(plot);
     }
-
+    
     // 3. ドラッグ終了 (PC)
     // マウスボタンが上がったら、押された状態を解除
     document.addEventListener('mouseup', () => {
@@ -112,11 +112,11 @@ function initFarmGrid() {
     FARM_BOX.addEventListener('touchstart', (event) => {
         isMouseDown = true;
         event.preventDefault(); // スクロールを防ぐ
-
+        
         // 最初のタッチ要素がマスなら、クリック処理を実行
         const targetPlot = event.touches[0].target.closest('.farm-plot');
         if (targetPlot) {
-            handlePlotClick({ currentTarget: targetPlot });
+             handlePlotClick({ currentTarget: targetPlot });
         }
     }, { passive: false }); // スクロール防止のため passive: false を指定
 
@@ -270,7 +270,7 @@ function handlePlotClick(event) {
 function handleItemSlotClick(event) {
     // クリックされた要素がボタンかスロットかに関わらず、親の .item-slot を取得する
     // HTMLが <button class="item-slot"> に変更されたため、event.currentTargetを使用
-    const slotElement = event.currentTarget;
+    const slotElement = event.currentTarget; 
     if (!slotElement || !slotElement.id.startsWith('seed-button')) return;
 
     // IDはボタンから取得する
@@ -286,7 +286,7 @@ function handleItemSlotClick(event) {
         // 新しい種を選択
         selectedSeed = cropId;
         isHarvesting = false;
-
+        
         // 他のスロットの選択状態と収穫モードを解除
         document.querySelectorAll('.item-slot').forEach(slot => slot.classList.remove('selected'));
         HARVEST_BUTTON.classList.remove('active');
@@ -418,7 +418,7 @@ function updateCurrentPrices() {
 
         if (noteElement && lastPrice !== undefined) {
             // 変更: いまのねだん：... おかね -> いまのねだん：... 円
-            noteElement.textContent = `今の売るねだん：${lastPrice} 円`;
+            noteElement.textContent = `いまのねだん：${lastPrice} 円`;
         }
     }
 }
@@ -462,7 +462,7 @@ function getChartData() {
     // 【修正】ラベルを現在の月を基準に相対的な「〇〇ヶ月まえ」として生成する
     const labels = Array.from({ length: numDataPoints }, (_, i) => {
         // 最新インデックスからの差分を2倍（2ヶ月間隔のため）
-        const monthsAgo = (latestIndex - i) * 2;
+        const monthsAgo = (latestIndex - i) * 2; 
 
         if (monthsAgo === 0) {
             return '今'; // 現在の月
@@ -521,7 +521,7 @@ function renderPriceChart() {
             xAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: '時間'
+                    labelString: '時間' 
                 }
             }],
             yAxes: [{
@@ -562,11 +562,6 @@ if (nextMonthBtn) {
     nextMonthBtn.addEventListener('click', () => {
         gameData.month++;
 
-        if (ENABLE_GAME_TIMER && gameData.month > GAME_DURATION_MONTHS) {
-            showGameResult(); // 結果表示関数を呼び出す
-            return; // これ以降の月の進行処理を行わない
-        }
-
         // 奇数月に価格が変動するように変更
         const shouldFluctuate = (gameData.month % 2 !== 0);
 
@@ -587,7 +582,7 @@ if (nextMonthBtn) {
         document.querySelectorAll('.item-slot').forEach(slot => slot.classList.remove('selected'));
         HARVEST_BUTTON?.classList.add('active'); // 変更: 収穫ボタンをアクティブにする
         FARM_BOX?.classList.remove('planting-mode');
-
+        
 
         // 情報パネルを更新
         updateInfoPanel();
@@ -656,25 +651,3 @@ document.addEventListener('DOMContentLoaded', () => {
         HARVEST_BUTTON.addEventListener('click', handleHarvestClick);
     }
 });
-
-/**
- * 💥 3. ゲーム終了時の結果表示関数（新規追加） 💥
- */
-function showGameResult() {
-    // 1. メインコンテンツの操作をできなくする
-    // 「次の月へ」ボタンと「収穫」ボタンを無効化
-    if (nextMonthBtn) nextMonthBtn.disabled = true;
-    if (HARVEST_BUTTON) HARVEST_BUTTON.disabled = true;
-
-    // 2. 最終結果をアラートで表示
-    alert(
-        `${GAME_DURATION_MONTHS}ヶ月間 お疲れさまでした！\n\n` +
-        `最終的な おかね は ${gameData.money} 円 です。\n\n` +
-        `（リロードしてもう一度あそべます）`
-    );
-
-    // 3. UIの日付を「終了」に変更
-    dateDisplay.textContent = "ゲーム終了";
-    dateDisplay.style.color = "red";
-    dateDisplay.style.fontWeight = "bold";
-}

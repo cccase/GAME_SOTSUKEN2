@@ -1,0 +1,243 @@
+/* market.css (サイドパネル・タブコンテンツ専用) */
+
+/* マーケットのエリアを囲むラッパー（#side-panel-wrapper） */
+#side-panel-wrapper {
+    flex-grow: 1;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    padding: 1% 0;
+    box-sizing: border-box;
+}
+
+/* [新規] タブボタンのコンテナ */
+#side-panel-tabs {
+    display: flex;
+    justify-content: space-around;
+    /* ボタンを均等に配置 */
+    width: 96%;
+    /* 左右に少し余白を持たせる */
+    margin: 0 auto;
+    flex-shrink: 0;
+    /* 縮まないように */
+}
+
+/* [新規] 個別ボタンのスタイル */
+.tab-button {
+    padding: 5px 10px;
+    border: 1px solid black;
+    background-color: #e0e0e0;
+    flex-grow: 1;
+    text-align: center;
+    margin: 0 2px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.tab-button:first-child {
+    margin-left: 0;
+}
+
+.tab-button:last-child {
+    margin-right: 0;
+}
+
+.tab-button.active {
+    background-color: #a6ff00;
+
+}
+
+#side-panel-content {
+    width: 90%;
+    height: 80%;
+    margin: 2% auto;
+    background-color: #4682b4;
+    border-radius: 5%;
+    /* 角の丸みは比率で */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2vw;
+    flex-grow: 1;
+    /* 親要素の残りのスペースを占める */
+}
+
+.tab-content {
+    width: 100%;
+    height: 100%;
+    display: none;
+    /* 初期状態では非表示 */
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-content.active {
+    display: flex;
+    /* アクティブなタブの内容を表示 */
+}
+
+/* --- タブコンテンツ内のスタイル --- */
+
+/* コンテンツを囲む青い角丸の箱の共通スタイル */
+.side-panel-box {
+    width: 95%;
+    height: 95%;
+    background-color: #4682b4;
+    /* 青色 */
+    border-radius: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2vw;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+/* 4分割グリッド (マーケット/ノート画面) */
+.item-grid {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* 個別アイテムスロットのスタイル */
+.item-slot {
+    background-color: white;
+    border-radius: 5px;
+    color: #333;
+    font-size: 0.8em;
+    font-weight: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    text-align: center;
+}
+
+
+/* マーケット画面*/
+/* ------------------------------------------------------ */
+
+.market-button {
+    background-color: #55a839;
+    /* 緑色 */
+}
+
+/* ノート画面 */
+/* ------------------------------------------------------ */
+
+
+/* ノートタブ用のアイテムスロットの調整 */
+.item-slot.note-slot {
+    /* メモ入力用に、テキストを左寄せ、レイアウトを調整 */
+    text-align: left;
+    padding: 3px;
+    font-size: 0.7em;
+}
+
+.item-slot.note-slot h4 {
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.item-slot.note-slot p {
+    align-items: flex-start;
+    font-size: 0.7em;
+    margin: 2px 0;
+}
+
+/* プレイヤーのメモ入力エリア */
+.memo-note {
+    width: 100%;
+    height: 100px;
+    /* 初期高さを設定 */
+    flex-grow: 1;
+    /* 残りのスペースを埋める */
+    margin-top: 8px;
+    border: 1px solid #777;
+    padding: 5px;
+    font-size: 0.85em;
+    resize: none;
+    /* ユーザーによるサイズ変更を禁止 */
+    box-sizing: border-box;
+}
+
+/* 相場（価格）チャートエリアのスタイル */
+/* ------------------------------------------------------ */
+
+.price-chart-box {
+    background-color: #f0f0f0;
+    /* 内側は灰色 */
+    border: 5px solid #4682b4;
+    /* 外枠の青色をborderで表現 */
+    color: #333;
+    font-size: 1.2em;
+    border-radius: 20px;
+    /* 画像の角の丸みを再現 */
+}
+/* market.css の末尾に追加 */
+
+/* グラフと価格表示エリアのレイアウト */
+.price-chart-box {
+    /* グラフと価格を縦に並べる */
+    flex-direction: column; 
+    /* グラフと価格コンテナがスペースを均等に占めるように */
+    justify-content: space-around; 
+}
+
+/* グラフコンテナの調整 */
+#chart-container {
+    width: 95%; 
+    height: 70%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 現在価格表示エリア */
+#current-prices-container {
+    width: 90%;
+    height: 20%;
+    display: flex;
+    justify-content: space-around; /* 要素を均等に配置 */
+    align-items: center;
+    border-top: 1px dashed #777; /* 区切り線 */
+    padding-top: 5px;
+}
+
+/* 個別価格アイテムのスタイル */
+.current-price-item {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding: 3px 5px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
+
+/* 個別アイテムスロットのスタイル */
+.item-slot {
+    background-color: white;
+    /* ... (中略) ... */
+    padding: 5px;
+    text-align: center;
+    border: 2px solid white; /* 選択状態の枠線が見えるように変更 */
+}
+
+.item-slot.selected {
+    background-color: #e6ffe6; /* 薄い緑色 */
+    border: 2px solid #55a839; /* market-buttonと同じ緑の枠線 */
+    transform: scale(1.03); /* 少し大きくして強調 */
+}
