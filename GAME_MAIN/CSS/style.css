@@ -23,7 +23,18 @@ html {
     /* スライドの背景 */
     box-sizing: border-box;
     /* paddingやborderをwidth/heightに含める */
+
+
+    /* --- 背景画像の設定 (変更箇所) --- */
+    background-color: white; /* 画像がない場合の予備色 */
+    background-image: url('../Images/bg_natural_sougen.jpg'); /* 画像のパス */
+    background-repeat: no-repeat; /* 繰り返しなし */
+    background-position: center; /* 中央寄せ */
+    background-size: cover; /* 画面全体を覆うように拡大縮小 */
+    /* -------------------------------- */
 }
+
+
 
 /* --- ヘッダー部分のスタイル --- */
 #game-header {
@@ -93,4 +104,55 @@ html {
     font-weight: bold;
     color: white;
     font-size: 0.9em;
+}
+
+/* --- 結果表示ウィンドウのスタイル (修正版) --- */
+#result-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* 背景を少し濃く */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    touch-action: none;
+    cursor: pointer;
+}
+
+#result-window {
+    background-color: white;
+    /* 変更: サイズを大きく */
+    width: 70%;           /* 画面幅の70%を使う */
+    max-width: 600px;     /* ただし最大600pxまで */
+    min-width: 300px;     /* スマホでも小さくなりすぎないように */
+    padding: 40px;        /* 内側の余白を増やす */
+    
+    border-radius: 20px;  /* 角丸を大きく */
+    text-align: center;
+    border: 6px solid #8e44ad; /* 枠線を太く */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6); /* 影を強調 */
+    
+    /* 変更: 文字サイズを全体的に大きく */
+    font-size: 1.2rem; 
+    
+    cursor: default;
+    /* アニメーション（ふわっと表示） */
+    animation: popIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+/* ポップアップのアニメーション定義 */
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* スマホなど画面が狭いとき用 */
+@media (max-width: 600px) {
+    #result-window {
+        width: 85%;
+        padding: 20px;
+    }
 }

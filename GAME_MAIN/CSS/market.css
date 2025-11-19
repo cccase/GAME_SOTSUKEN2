@@ -3,7 +3,7 @@
 /* マーケットのエリアを囲むラッパー（#side-panel-wrapper） */
 #side-panel-wrapper {
     flex-grow: 1;
-    background-color: #f0f0f0;
+    background-color: #f0f0f0dd;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
@@ -24,29 +24,61 @@
     /* 縮まないように */
 }
 
-/* [新規] 個別ボタンのスタイル */
+/* [修正] 個別ボタンのスタイル */
 .tab-button {
-    padding: 5px 10px;
-    border: 1px solid black;
+    padding: 8px 10px; /* パディングを少し広げる */
+    border: 1px solid #999; /* 枠線の色を調整 */
+    border-bottom: none; /* 下の影と干渉しないよう調整（お好みで） */
     background-color: #e0e0e0;
     flex-grow: 1;
     text-align: center;
-    margin: 0 2px;
+    margin: 0 4px; /* ボタン同士の間隔を少し広げる */
     font-size: 1.1em;
+    font-weight: bold; /* 太字にして視認性アップ */
     cursor: pointer;
+    
+    /* --- 🆕 追加: 立体感を出すスタイル --- */
+    border-radius: 8px 8px 0 0; /* 上側だけ角丸にする（タブっぽさ） */
+    box-shadow: 0 4px 0 #888; /* 下に濃い影をつけて厚みを表現 */
+    transition: all 0.1s ease; /* 動きを滑らかに */
+    position: relative; /* 沈み込みの基準位置 */
+    top: 0;
 }
 
+/* --- 🆕 追加: マウスが乗ったとき --- */
+.tab-button:hover {
+    background-color: #dcdcdc;
+    top: -2px; /* 少し浮き上がる */
+    box-shadow: 0 6px 0 #888; /* 影が伸びる */
+}
+
+/* --- 🆕 追加: クリックした瞬間（押し込み） --- */
+.tab-button:active {
+    top: 4px; /* 下に沈む */
+    box-shadow: 0 0 0 #888; /* 影をなくす（地面につく） */
+}
+
+/* [修正] 選択中のタブ（凹んだ状態や光った状態にする） */
+.tab-button.active {
+    background-color: #a6ff00;
+    color: #000;
+    border-color: #669900;
+    
+    /* 選択中は「押された状態」を維持、またはハイライト */
+    top: 4px; /* 沈んだ位置で固定 */
+    box-shadow: 0 0 0 #669900; /* 影なし */
+    
+    /* もしくは、沈ませずにフラットにして境界を消すデザインも一般的ですが、
+       今回は「ボタン感」重視で沈ませたままにします */
+}
+
+/* 既存の調整用スタイル */
 .tab-button:first-child {
     margin-left: 0;
 }
 
 .tab-button:last-child {
     margin-right: 0;
-}
-
-.tab-button.active {
-    background-color: #a6ff00;
-
 }
 
 #side-panel-content {
