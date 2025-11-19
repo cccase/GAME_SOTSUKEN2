@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卒業研究実験：説明と同意</title>
+    <style>
+        /* ページ全体のデザイン設定 */
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 白いカード部分のデザイン */
+        .container {
+            background-color: #fff;
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            border-bottom: 2px solid #4CAF50; /* 緑色のアクセントライン */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            background-color: #e8f5e9; /* 薄い緑の背景 */
+            padding: 8px 12px;
+            border-left: 5px solid #4CAF50;
+        }
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        ul {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        /* 注意書きのスタイル */
+        .note {
+            font-size: 0.9em;
+            color: #666;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* 同意ボタンエリアのデザイン */
+        .action-area {
+            margin-top: 40px;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+        }
+
+        /* ボタンのデザイン */
+        .btn-start {
+            display: inline-block;
+            background-color: #4CAF50; /* ゲームの雰囲気に合わせた緑 */
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-start:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-start:active {
+            transform: translateY(1px);
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>卒業研究実験へのご協力のお願い</h1>
+        
+        <p>この度は、本研究実験にアクセスいただきありがとうございます。<br>
+        以下の説明をお読みいただき、内容に同意いただける場合は「同意して実験（ゲーム）を始める」ボタンを押して進んでください。</p>
+
+        <h2>1. 実験の目的</h2>
+        <p>
+            本実験は、[ここに研究テーマや目的を簡潔に書く。例：ゲーム内の経済活動における意思決定プロセスの分析] を目的として行われます。<br>
+            収集されたデータは学術的な分析のみに使用され、個人の特定やその他の目的には使用されません。
+        </p>
+
+        <h2>2. 実験の内容と所要時間</h2>
+        <ul>
+            <li><strong>内容：</strong> ブラウザ上で動作する「農園シミュレーションゲーム」をプレイしていただきます。</li>
+            <li><strong>所要時間：</strong> およそ [例：5分〜10分] 程度です。</li>
+            <li><strong>操作方法：</strong> マウス（またはタップ）のみで操作可能です。詳細はゲーム画面内で説明されます。</li>
+        </ul>
+
+        <h2>3. 個人情報の取り扱いについて</h2>
+        <div class="note">
+            <ul>
+                <li>本実験では、氏名・住所・電話番号などの個人を特定できる情報は一切収集しません。</li>
+                <li>プレイ中の操作ログ（選択したアイテム、スコアなど）のみが匿名データとして記録されます。</li>
+                <li>実験結果は統計的に処理され、卒業論文および学会発表などで公表される可能性があります。</li>
+            </ul>
+        </div>
+
+        <h2>4. 参加の任意性</h2>
+        <p>
+            本実験への参加は完全に自由意志によるものです。<br>
+            実験の途中であっても、ブラウザを閉じることでいつでもペナルティなく実験を中止することができます。
+        </p>
+
+        <div class="action-area">
+            <p>上記の説明内容を理解し、実験に参加することに同意しますか？</p>
+            
+            <a href="GAME.html" class="btn-start">同意して実験を始める</a>
+        </div>
+
+        <div class="footer">
+            <p>
+                [○○大学 ○○学部 ○○学科]<br>
+                指導教員：[教員名]<br>
+                研究実施者：[あなたの氏名]
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>
