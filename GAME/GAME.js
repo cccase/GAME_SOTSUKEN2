@@ -413,7 +413,11 @@ function renderPriceChart() {
         maintainAspectRatio: false,
         title: {
             display: true,
+<<<<<<< HEAD
             text: '価格変動チャート (現在を「今」として表示)',
+=======
+            text: '売るときのねだんチャート',
+>>>>>>> 94c55a558dcacabf3d05922fac5d2a44c58a9555
             fontSize: 16
         },
         scales: {
@@ -453,6 +457,7 @@ function renderPriceChart() {
 
     updateCurrentPrices();
 }
+<<<<<<< HEAD
 
 if (nextMonthBtn) {
     nextMonthBtn.addEventListener('click', () => {
@@ -474,6 +479,42 @@ if (nextMonthBtn) {
             return; 
         }
 
+=======
+// GAME.js の nextMonthBtn.addEventListener('click', ...) 内
+
+if (nextMonthBtn) {
+    nextMonthBtn.addEventListener('click', () => {
+
+        // 💥 1. ゲーム終了判定を修正 💥
+        // ENABLE_GAME_TIMER が true の場合のみ、終了判定を行う
+        if (ENABLE_GAME_TIMER && gameData.month > GAME_DURATION_MONTHS) {
+            // 既に「終了」ボタンが押された後なので、結果を表示
+            showGameResult();
+            return;
+        }
+
+        // 月を進める
+        gameData.month++;
+
+        // 💥 2. 最終月（12ヶ月目）に達したかどうかの判定 💥
+        if (ENABLE_GAME_TIMER && gameData.month === GAME_DURATION_MONTHS) {
+            // これが最終月の場合、ボタンのテキストを「終了」に変更
+            nextMonthBtn.textContent = "終了";
+            nextMonthBtn.style.backgroundColor = "#dc3545"; // 目立つように赤色に変更
+            nextMonthBtn.style.color = "white";
+        }
+
+        // 💥 3. 12ヶ月を超えた場合（13ヶ月目）の処理 💥
+        // ※「終了」ボタンが押されたときの処理
+        if (ENABLE_GAME_TIMER && gameData.month > GAME_DURATION_MONTHS) {
+            // 13ヶ月目になったので、結果を表示して処理を停止
+            showGameResult();
+            return;
+        }
+        // --------------------------------
+
+        // 奇数月に価格が変動するように変更
+>>>>>>> 94c55a558dcacabf3d05922fac5d2a44c58a9555
         const shouldFluctuate = (gameData.month % 2 !== 0);
 
         for (const cropId in gameData.priceHistory) {
@@ -486,7 +527,11 @@ if (nextMonthBtn) {
         }
 
         selectedSeed = null;
+<<<<<<< HEAD
         isHarvesting = true; 
+=======
+        isHarvesting = true; // 収穫モードをデフォルトに変更
+>>>>>>> 94c55a558dcacabf3d05922fac5d2a44c58a9555
         document.querySelectorAll('.item-slot').forEach(btn => btn.classList.remove('selected'));
         HARVEST_BUTTON?.classList.add('active');
         FARM_BOX?.classList.remove('planting-mode');
