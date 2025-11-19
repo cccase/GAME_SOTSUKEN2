@@ -101,14 +101,14 @@ html {
     font-size: 0.9em;
 }
 
-/* --- 結果表示ウィンドウのスタイル (修正版) --- */
-#result-overlay {
+/* --- オーバーレイ (画面全体を覆う暗い背景) --- */
+#overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6); /* 背景を少し濃く */
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -117,25 +117,30 @@ html {
     cursor: pointer;
 }
 
-#result-window {
+/* --- ウィンドウ (真ん中の白い箱) --- */
+#overlay-window {
     background-color: white;
-    /* 変更: サイズを大きく */
-    width: 70%;           /* 画面幅の70%を使う */
-    max-width: 600px;     /* ただし最大600pxまで */
-    min-width: 300px;     /* スマホでも小さくなりすぎないように */
-    padding: 40px;        /* 内側の余白を増やす */
+    width: 70%;
+    max-width: 600px;
+    min-width: 300px;
+    padding: 40px;
     
-    border-radius: 20px;  /* 角丸を大きく */
+    border-radius: 20px;
     text-align: center;
-    border: 6px solid #8e44ad; /* 枠線を太く */
-    box-shadow: 0 15px 30px rgba(0,0,0,0.6); /* 影を強調 */
+    border: 6px solid #8e44ad;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
     
-    /* 変更: 文字サイズを全体的に大きく */
     font-size: 1.2rem; 
-    
     cursor: default;
-    /* アニメーション（ふわっと表示） */
     animation: popIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+/* スマホ用の調整も忘れずに変更 */
+@media (max-width: 600px) {
+    #overlay-window {
+        width: 85%;
+        padding: 20px;
+    }
 }
 
 /* ポップアップのアニメーション定義 */
@@ -150,4 +155,10 @@ html {
         width: 85%;
         padding: 20px;
     }
+}
+
+
+/* 変数定義 */
+:root{
+    --main-contents-bg: #f0f0f0dd;
 }

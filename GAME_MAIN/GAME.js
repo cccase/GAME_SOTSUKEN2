@@ -90,7 +90,7 @@ function setupEventListeners() {
     }
 
     // 結果ウィンドウを閉じる処理 (オーバーレイクリック)
-    const overlay = document.getElementById('result-overlay');
+    const overlay = document.getElementById('overlay');
     if (overlay) {
         overlay.addEventListener('click', (event) => {
             if (event.target === overlay) {
@@ -151,7 +151,7 @@ function initFarmGrid() {
 function handlePlotClick(event) {
     const plotElement = event.currentTarget;
     if (!plotElement || !plotElement.dataset) return;
-    
+
     const index = parseInt(plotElement.dataset.index);
     const plotData = gameData.farmPlots[index];
 
@@ -161,7 +161,7 @@ function handlePlotClick(event) {
 
         const seedPrice = PRICE_BASE[selectedSeed].seedPrice;
         if (gameData.money < seedPrice) {
-            alert('お金が足りません！');
+            showOverlay('alert', 'お金が足りません！');
         } else {
             gameData.money -= seedPrice;
             gameData.farmPlots[index] = { cropId: selectedSeed, plantedMonth: gameData.month };
@@ -370,7 +370,7 @@ function updateCurrentPrices() {
     for (const cropId in gameData.priceHistory) {
         const currentPrice = getCurrentPrice(cropId);
         const cropName = PRICE_BASE[cropId].label;
-        
+
         if (currentPrice === undefined) continue;
 
         // DOM IDのマッピング
@@ -379,11 +379,11 @@ function updateCurrentPrices() {
             noteTab: `note-price-${cropId}`,
             marketTab: `market-price-${cropId}`
         };
-        
+
         // ID規則の補正（HTML側のIDが price-lettuce, price-carrot 等の場合）
         // HTMLのIDと合わせて調整
-        let baseId = cropId; 
-        
+        let baseId = cropId;
+
         // ねだんタブ更新
         const elPrice = document.getElementById(`price-${baseId}`);
         if (elPrice) elPrice.textContent = `${cropName}: ${currentPrice} 円`;
@@ -415,14 +415,14 @@ function showGameResult() {
 
     // 結果メッセージの作成（リンクを追加）
     const message = `${GAME_DURATION_MONTHS}ヶ月間 おつかれさまでした！<br>` +
-                    `あなたの おかね は <strong>${gameData.money} 円</strong> です。<br><br>` +
-                    `<strong><a href="${surveyLink}" target="_blank" style="color: #3498db; text-decoration: underline;">アンケートにご協力ください</a></strong>`;
-    
+        `あなたの おかね は <strong>${gameData.money} 円</strong> です。<br><br>` +
+        `<strong><a href="${surveyLink}" target="_blank" style="color: #3498db; text-decoration: underline;">アンケートにご協力ください</a></strong>`;
+
     const resultMessageEl = document.getElementById('result-message');
     if (resultMessageEl) resultMessageEl.innerHTML = message;
 
-    const overlay = document.getElementById('result-overlay');
-    if (overlay) overlay.style.display = 'flex';
+    const overlay = document.getElementById('overlay');
+    if (overlay) showOverlay('result', message);
 
     DATE_DISPLAY.textContent = "ゲーム終了";
     DATE_DISPLAY.style.color = "red";
@@ -465,7 +465,7 @@ function renderPriceChart() {
 function getChartData() {
     const numDataPoints = gameData.priceHistory.lettuce.length;
     const latestIndex = numDataPoints - 1;
-    
+
     const labels = Array.from({ length: numDataPoints }, (_, i) => {
         const monthsAgo = (latestIndex - i) * 2;
         return monthsAgo === 0 ? '今' : `${monthsAgo}ヶ月前`;
@@ -484,4 +484,33 @@ function getChartData() {
         });
     }
     return { labels, datasets };
+}
+
+// =========================================================================
+// 汎用オーバーレイ表示関数 (これを新たに追加)
+// type: 'alert' または 'result'
+// message: アラートに表示したい文字
+// =========================================================================
+function showOverlay(type, message = '') {
+    const overlay = document.getElementById('overlay');
+    const alertSection = document.getElementById('alert-section');
+    const resultSection = document.getElementById('result-section');
+    const alertMessageEl = document.getElementById('alert-message');
+
+    if (!overlay || !alertSection || !resultSection) return;
+
+    // 一旦中身を両方隠す
+    alertSection.style.display = 'none';
+    resultSection.style.display = 'none';
+
+    // 指定された方だけ表示する
+    if (type === 'alert') {
+        alertSection.style.display = 'block';
+        if (alertMessageEl) alertMessageEl.textContent = message;
+    } else if (type === 'result') {
+        resultSection.style.display = 'block';
+    }
+
+    // 最後に膜全体を表示
+    overlay.style.display = 'flex';
 }
