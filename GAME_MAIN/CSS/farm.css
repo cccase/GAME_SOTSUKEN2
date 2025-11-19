@@ -5,7 +5,7 @@
     font-size: 2vw;
     height: 100%;
     aspect-ratio: 1 / 1;
-    background-color: #f0f0f0;
+    background-color: #f0f0f0dd;
     /* 正方形を維持 */
     flex-shrink: 0;
     /* 画面が狭くなっても縮小しないように設定 */
