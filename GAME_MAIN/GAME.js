@@ -390,11 +390,11 @@ function updateCurrentPrices() {
 
         // ノートタブ更新
         const elNote = document.getElementById(`note-price-${baseId}`);
-        if (elNote) elNote.textContent = `いまのねだん：${currentPrice} 円`;
+        if (elNote) elNote.textContent = `今のねだん：${currentPrice} 円`;
 
         // マーケットタブ更新
         const elMarket = document.getElementById(`market-price-${baseId}`);
-        if (elMarket) elMarket.textContent = `いまのねだん: ${currentPrice} 円`;
+        if (elMarket) elMarket.textContent = `今のねだん: ${currentPrice} 円`;
     }
 }
 
