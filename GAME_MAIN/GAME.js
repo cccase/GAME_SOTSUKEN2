@@ -410,8 +410,13 @@ function showGameResult() {
         HARVEST_BUTTON.style.backgroundColor = "gray";
     }
 
+    // アンケートリンク
+    const surveyLink = "https://forms.gle/4B6jshohSmWRDudG9";
+
+    // 結果メッセージの作成（リンクを追加）
     const message = `${GAME_DURATION_MONTHS}ヶ月間 おつかれさまでした！<br>` +
-                    `あなたの おかね は <strong>${gameData.money} 円</strong> です。`;
+                    `あなたの おかね は <strong>${gameData.money} 円</strong> です。<br><br>` +
+                    `<strong><a href="${surveyLink}" target="_blank" style="color: #3498db; text-decoration: underline;">アンケートにご協力ください</a></strong>`;
     
     const resultMessageEl = document.getElementById('result-message');
     if (resultMessageEl) resultMessageEl.innerHTML = message;

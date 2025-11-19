@@ -1,4 +1,4 @@
-/* market.css (サイドパネル・タブコンテンツ専用) */
+/* market.css (サイドパネル・タブコンテンツ専用) - Refactored */
 
 /* マーケットのエリアを囲むラッパー（#side-panel-wrapper） */
 #side-panel-wrapper {
@@ -12,7 +12,7 @@
     box-sizing: border-box;
 }
 
-/* [新規] タブボタンのコンテナ */
+/* タブボタンのコンテナ */
 #side-panel-tabs {
     display: flex;
     justify-content: space-around;
@@ -24,11 +24,11 @@
     /* 縮まないように */
 }
 
-/* [修正] 個別ボタンのスタイル */
+/* 個別ボタンのスタイル */
 .tab-button {
     padding: 8px 10px; /* パディングを少し広げる */
     border: 1px solid #999; /* 枠線の色を調整 */
-    border-bottom: none; /* 下の影と干渉しないよう調整（お好みで） */
+    border-bottom: none; /* 下の影と干渉しないよう調整 */
     background-color: #e0e0e0;
     flex-grow: 1;
     text-align: center;
@@ -37,7 +37,7 @@
     font-weight: bold; /* 太字にして視認性アップ */
     cursor: pointer;
     
-    /* --- 🆕 追加: 立体感を出すスタイル --- */
+    /* 立体感を出すスタイル */
     border-radius: 8px 8px 0 0; /* 上側だけ角丸にする（タブっぽさ） */
     box-shadow: 0 4px 0 #888; /* 下に濃い影をつけて厚みを表現 */
     transition: all 0.1s ease; /* 動きを滑らかに */
@@ -45,31 +45,28 @@
     top: 0;
 }
 
-/* --- 🆕 追加: マウスが乗ったとき --- */
+/* マウスが乗ったとき */
 .tab-button:hover {
     background-color: #dcdcdc;
     top: -2px; /* 少し浮き上がる */
     box-shadow: 0 6px 0 #888; /* 影が伸びる */
 }
 
-/* --- 🆕 追加: クリックした瞬間（押し込み） --- */
+/* クリックした瞬間（押し込み） */
 .tab-button:active {
     top: 4px; /* 下に沈む */
     box-shadow: 0 0 0 #888; /* 影をなくす（地面につく） */
 }
 
-/* [修正] 選択中のタブ（凹んだ状態や光った状態にする） */
+/* 選択中のタブ（凹んだ状態や光った状態にする） */
 .tab-button.active {
     background-color: #a6ff00;
     color: #000;
     border-color: #669900;
     
-    /* 選択中は「押された状態」を維持、またはハイライト */
+    /* 選択中は「押された状態」を維持 */
     top: 4px; /* 沈んだ位置で固定 */
     box-shadow: 0 0 0 #669900; /* 影なし */
-    
-    /* もしくは、沈ませずにフラットにして境界を消すデザインも一般的ですが、
-       今回は「ボタン感」重視で沈ませたままにします */
 }
 
 /* 既存の調整用スタイル */
@@ -142,7 +139,7 @@
     box-sizing: border-box;
 }
 
-/* 個別アイテムスロットのスタイル */
+/* 個別アイテムスロットのスタイル (統合済み) */
 .item-slot {
     background-color: white;
     border-radius: 5px;
@@ -155,10 +152,16 @@
     align-items: center;
     padding: 5px;
     text-align: center;
+    border: 2px solid white; /* 選択状態の枠線が見えるように設定 */
 }
 
+.item-slot.selected {
+    background-color: #e6ffe6; /* 薄い緑色 */
+    border: 2px solid #55a839; /* market-buttonと同じ緑の枠線 */
+    transform: scale(1.03); /* 少し大きくして強調 */
+}
 
-/* マーケット画面*/
+/* マーケット画面 */
 /* ------------------------------------------------------ */
 
 .market-button {
@@ -168,7 +171,6 @@
 
 /* ノート画面 */
 /* ------------------------------------------------------ */
-
 
 /* ノートタブ用のアイテムスロットの調整 */
 .item-slot.note-slot {
@@ -205,7 +207,7 @@
     box-sizing: border-box;
 }
 
-/* 相場（価格）チャートエリアのスタイル */
+/* 相場（価格）チャートエリアのスタイル (統合済み) */
 /* ------------------------------------------------------ */
 
 .price-chart-box {
@@ -217,12 +219,8 @@
     font-size: 1.2em;
     border-radius: 20px;
     /* 画像の角の丸みを再現 */
-}
-/* market.css の末尾に追加 */
-
-/* グラフと価格表示エリアのレイアウト */
-.price-chart-box {
-    /* グラフと価格を縦に並べる */
+    
+    /* レイアウト設定 */
     flex-direction: column; 
     /* グラフと価格コンテナがスペースを均等に占めるように */
     justify-content: space-around; 
@@ -257,19 +255,4 @@
     padding: 3px 5px;
     background-color: #e0e0e0;
     border-radius: 5px;
-}
-
-/* 個別アイテムスロットのスタイル */
-.item-slot {
-    background-color: white;
-    /* ... (中略) ... */
-    padding: 5px;
-    text-align: center;
-    border: 2px solid white; /* 選択状態の枠線が見えるように変更 */
-}
-
-.item-slot.selected {
-    background-color: #e6ffe6; /* 薄い緑色 */
-    border: 2px solid #55a839; /* market-buttonと同じ緑の枠線 */
-    transform: scale(1.03); /* 少し大きくして強調 */
 }

@@ -1,12 +1,11 @@
-/* farm.css (畑エリア専用) */
-
+/* farm.css (畑エリア専用) - Refactored */
 
 /* 畑のエリア (正方形を維持し、縮小を禁止) */
 #farm-area {
     font-size: 2vw;
     height: 100%;
     aspect-ratio: 1 / 1;
-    background-color: #f0f0f0dd;
+    background-color: #f0f0f0;
     /* 正方形を維持 */
     flex-shrink: 0;
     /* 画面が狭くなっても縮小しないように設定 */
@@ -30,7 +29,6 @@
     align-items: center;
     font-size: 2vw;
     grid-template-rows: repeat(10, 1fr);
-
 }
 
 #next-month-button,
@@ -41,7 +39,8 @@
     color: black;
     font-size: 0.9em;
 }
-/* --- 畑のマス目 (farm-plot) のスタイル (ここから追加) --- */
+
+/* --- 畑のマス目 (farm-plot) のスタイル --- */
 .farm-plot {
     /* 畑のマス目。10x10のグリッドの各セル */
     width: 100%;
@@ -67,11 +66,12 @@
     cursor: crosshair;
 }
 
-/* 収穫可能なマスの表示 (収穫モード時でなくても目立つように) */
+/* 収穫可能なマスの表示 */
 .farm-plot.ready-to-harvest {
     background-color: #f39c12;
     /* 収穫可能な作物の色 */
     cursor: cell;
+    border: #fdf900 solid 2px;
 }
 
 /* 作物の色分け（任意） */
@@ -91,14 +91,9 @@
     background-color: rgba(100, 149, 237, 0.5);
 }
 
-/* --- 畑のマス目 (farm-plot) のスタイル (ここまで追加) --- */
 #farm-button.active {
     background-color: #f39c12; /* 収穫可能なマスと合わせたオレンジ色 */
     color: white; 
     border: 2px solid #e67e22;
     box-shadow: 0 0 8px rgba(243, 156, 18, 1); /* 目立つように影を付ける */
-}
-
-.farm-plot.ready-to-harvest{
-    border: #fdf900 solid 2px;
 }

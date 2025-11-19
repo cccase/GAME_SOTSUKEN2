@@ -1,4 +1,4 @@
-/* style.css (メイン・共通レイアウト) */
+/* style.css (メイン・共通レイアウト) - Refactored */
 
 body,
 html {
@@ -24,17 +24,13 @@ html {
     box-sizing: border-box;
     /* paddingやborderをwidth/heightに含める */
 
-
-    /* --- 背景画像の設定 (変更箇所) --- */
-    background-color: white; /* 画像がない場合の予備色 */
+    /* --- 背景画像の設定 --- */
+    /* 画像がない場合の予備色は上で設定済み */
     background-image: url('../Images/bg_natural_sougen.jpg'); /* 画像のパス */
     background-repeat: no-repeat; /* 繰り返しなし */
     background-position: center; /* 中央寄せ */
     background-size: cover; /* 画面全体を覆うように拡大縮小 */
-    /* -------------------------------- */
 }
-
-
 
 /* --- ヘッダー部分のスタイル --- */
 #game-header {
@@ -93,7 +89,6 @@ html {
     /* 畑の大きさが決まっても、このコンテナは必ず横にスクロールしない */
     overflow: hidden;
 }
-
 
 /* ボタンの共通スタイル */
 .action-button {
