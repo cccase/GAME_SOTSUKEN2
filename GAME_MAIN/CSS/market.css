@@ -54,8 +54,8 @@
 
 /* クリックした瞬間（押し込み） */
 .tab-button:active {
-    top: 4px; /* 下に沈む */
-    box-shadow: 0 0 0 #888; /* 影をなくす（地面につく） */
+    transform: translateY(4px); /* これが原因 */
+    box-shadow: none;
 }
 
 /* 選択中のタブ（凹んだ状態や光った状態にする） */

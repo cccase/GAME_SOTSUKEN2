@@ -224,7 +224,7 @@ function updatePlotDisplay(plotElement, plotData) {
 // =========================================================================
 function initTabSwitcher() {
     const tabsContainer = document.getElementById('side-panel-tabs');
-    tabsContainer.addEventListener('click', (event) => {
+    tabsContainer.addEventListener('mousedown', (event) => {
         const clickedButton = event.target.closest('button.tab-button');
         if (!clickedButton) return;
 
