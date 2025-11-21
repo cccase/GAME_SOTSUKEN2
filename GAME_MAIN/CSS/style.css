@@ -121,6 +121,8 @@ html {
 #overlay-window {
     background-color: white;
     width: 70%;
+    max-width: 800px;
+    min-width: 500px;
     padding: 40px;
     
     border-radius: 20px;
