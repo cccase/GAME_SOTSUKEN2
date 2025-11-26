@@ -123,6 +123,12 @@ function setupEventListeners() {
             showOverlay('help');
         });
     }
+    const htmlHintBtn = document.getElementById('hint-button');
+    if (htmlHintBtn) {
+        htmlHintBtn.addEventListener('click', () => {
+            showOverlay('hint');
+        });
+    }
 }
 
 
