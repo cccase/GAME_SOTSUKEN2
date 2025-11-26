@@ -62,15 +62,16 @@
 }
 
 /* 植え付けモード時のカーソル表示 */
-#farm-box.planting-mode .farm-plot.empty {
-    cursor: url('../Images/tane_fukuro_resize.png'), auto;
+#farm-box.planting-mode * {
+    cursor: url('../Images/tane_fukuro_resize.png') 16 16, auto;
 }
+
 
 /* 収穫可能なマスの表示 */
 .farm-plot.ready-to-harvest {
     background-color: #f39c12;
     /* 収穫可能な作物の色 */
-    cursor: cell;
+    cursor: url('../Images/dougu_kuwa_bichu_resize.png') 16 16, auto;
     border: #fdf900 solid 2px;
 }
 

@@ -123,32 +123,6 @@ function setupEventListeners() {
             showOverlay('help');
         });
     }
-    
-    // 【追加】ヒント機能へのアクセス（ノートタブに追加することを想定）
-    // GAME.htmlのノートタブ部分にヒントボタンを追加する場合の処理
-    // ※今回はHTMLへの直接記述ではなく、JSで動的にノートタブへボタンを追加します
-    const noteTabContent = document.getElementById('content-note');
-    if (noteTabContent) {
-        // ヒントボタンを作成して追加
-        const hintBtnContainer = document.createElement('div');
-        hintBtnContainer.style.width = '100%';
-        hintBtnContainer.style.textAlign = 'center';
-        hintBtnContainer.style.marginBottom = '10px';
-        
-        const hintBtn = document.createElement('button');
-        hintBtn.textContent = "💡 計算のヒントを見る";
-        hintBtn.className = "action-button";
-        hintBtn.style.backgroundColor = "#f39c12";
-        hintBtn.style.fontSize = "1.2rem";
-        
-        hintBtn.addEventListener('click', () => {
-            showOverlay('hint');
-        });
-
-        hintBtnContainer.appendChild(hintBtn);
-        // ノートタブの最初（side-panel-boxの前）に挿入
-        noteTabContent.insertBefore(hintBtnContainer, noteTabContent.firstChild);
-    }
 }
 
 
@@ -313,6 +287,7 @@ function handleHarvestClick() {
         resetSelection();
         isHarvesting = true;
         HARVEST_BUTTON.classList.add('active');
+        FARM_BOX.classList.add('harvest-mode');
     }
 }
 
@@ -321,7 +296,10 @@ function resetSelection() {
     isHarvesting = false;
     document.querySelectorAll('.item-slot').forEach(slot => slot.classList.remove('selected'));
     if (HARVEST_BUTTON) HARVEST_BUTTON.classList.remove('active');
-    if (FARM_BOX) FARM_BOX.classList.remove('planting-mode');
+    if (FARM_BOX) {
+        FARM_BOX.classList.remove('planting-mode');
+        FARM_BOX.classList.remove('harvest-mode');
+    }
 }
 
 function getCropIdFromSeedButtonId(buttonId) {
