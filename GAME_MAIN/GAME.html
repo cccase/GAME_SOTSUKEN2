@@ -125,7 +125,6 @@
 
     <div id="overlay" style="display: none;">
         <div id="overlay-window">
-
             <div id="alert-section" style="display: none;">
                 <h2 style="margin-top: 0;">お知らせ</h2>
                 <p id="alert-message" style="font-size: 1.2em; line-height: 1.5;"></p>
@@ -138,9 +137,68 @@
                 <p style="font-size: 0.8em; color: gray;">(画面のどこかを押すと閉じます)</p>
             </div>
 
+            <div id="help-section" style="display: none; text-align: left;">
+                <h2 style="color: #27ae60; text-align: center; margin-top: 0;">あそびかた</h2>
+                <div style="font-size: 0.9em; line-height: 1.6;">
+                    <p><strong>目的：</strong> 12ヶ月（1年間）で、できるだけ多くのお金を稼ごう！</p>
+                    <hr>
+                    <p><strong>1. たねを買う</strong><br>
+                        「マーケット」で野菜の種を選んで買います。<br>
+                        野菜によって「育つまでの時間」と「買うねだん」が違います。</p>
+                    <p><strong>2. 育てる</strong><br>
+                        畑のあいているところをタッチして種を植えます。<br>
+                        「次の月へ」を押すと、時間が進んで野菜が育ちます。</p>
+                    <p><strong>3. 売る（しゅうかく）</strong><br>
+                        育ちきった野菜を「しゅうかく」すると、自動的に売られてお金になります。<br>
+                        <span style="color: #e74c3c;">※「売るねだん」は毎月変わるよ！安くなっているときは注意！</span>
+                    </p>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="action-button" onclick="document.getElementById('overlay').style.display='none'"
+                        style="background-color: #333;">とじる</button>
+                </div>
+            </div>
+
+            <div id="hint-section" style="display: none; text-align: left;">
+                <h2 style="color: #f39c12; text-align: center; margin-top: 0;">計算のヒント</h2>
+                <div style="font-size: 0.9em; line-height: 1.6;">
+                    <p>どの野菜を育てると一番もうかるかな？<br>
+                        迷ったときは<strong>「1ヶ月あたり の もうけ」</strong>を計算してみよう！</p>
+
+                    <div
+                        style="background-color: #fff3cd; padding: 10px; border-radius: 5px; margin: 10px 0; border: 2px solid #ffeeba;">
+                        <strong>式：</strong><br>
+                        ( 売るねだん － 買うねだん ) ÷ 育つ期間 ＝ 1ヶ月あたりのもうけ
+                    </div>
+
+                    <p>例えば...<br>
+                        ・買う: 100円、売る: 300円、期間: 2ヶ月 の場合<br>
+                        (300 - 100) ÷ 2 = <strong>100円 (1ヶ月あたり)</strong></p>
+
+                    <p>「ノート」を使って計算してみよう！</p>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="action-button" onclick="document.getElementById('overlay').style.display='none'"
+                        style="background-color: #333;">とじる</button>
+                </div>
+            </div>
         </div>
     </div>
 
+    <div id="title-screen"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255,255,255,0.95); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <h1
+            style="font-size: 3em; color: #27ae60; margin-bottom: 20px; text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.1);">
+            のうえんゲーム</h1>
+        <p style="font-size: 1.2em; color: #555; margin-bottom: 40px;">〜 いちばん もうかる 野菜は どれ？ 〜</p>
+
+        <div style="display: flex; gap: 20px;">
+            <button id="btn-start-game" class="action-button"
+                style="font-size: 1.5em; padding: 15px 40px; background-color: #e67e22; box-shadow: 0 5px 0 #d35400;">スタート</button>
+            <button id="btn-show-help" class="action-button"
+                style="font-size: 1.2em; padding: 15px 30px; background-color: #3498db; box-shadow: 0 5px 0 #2980b9;">あそびかた</button>
+        </div>
+    </div>
     <script src="GAME.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 </body>

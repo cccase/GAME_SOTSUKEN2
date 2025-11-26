@@ -109,7 +109,7 @@ html {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 9999;
+    z-index: 20000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -158,7 +158,39 @@ html {
 }
 
 
+/* タイトル画面のボタンスタイル調整 */
+#title-screen .action-button:hover {
+    transform: translateY(-3px);
+    opacity: 0.9;
+}
+#title-screen .action-button:active {
+    transform: translateY(2px);
+    box-shadow: none !important; /* 押したときは影を消す */
+}
+
+/* ヘルプ・ヒントセクション内のスタイル */
+#help-section h2, #hint-section h2 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+#help-section p, #hint-section p {
+    margin-bottom: 12px;
+}
+
+/* ノートタブに追加されるヒントボタンの調整 */
+#content-note .action-button {
+    box-shadow: 0 4px 0 #d35400; /* 立体感を統一 */
+}
+#content-note .action-button:active {
+    box-shadow: none;
+    transform: translateY(4px);
+}
+
+
 /* 変数定義 */
 :root{
     --main-contents-bg: #f0f0f0dd;
 }
+

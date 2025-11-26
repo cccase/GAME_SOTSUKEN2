@@ -63,7 +63,7 @@
 
 /* 植え付けモード時のカーソル表示 */
 #farm-box.planting-mode .farm-plot.empty {
-    cursor: crosshair;
+    cursor: url('../Images/tane_fukuro_resize.png'), auto;
 }
 
 /* 収穫可能なマスの表示 */

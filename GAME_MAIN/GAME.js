@@ -12,6 +12,7 @@ const NEXT_MONTH_BUTTON = document.getElementById('next-month-button');
 const MONEY_DISPLAY = document.querySelector('#gold-box');
 const DATE_DISPLAY = document.querySelector('#date-box');
 const TAB_PRICE_BTN = document.getElementById('tab-price');
+const BTN_OPTION = document.getElementById('option-box'); // ← これが必要です！
 
 // ゲームデータ
 let gameData = {
@@ -97,6 +98,56 @@ function setupEventListeners() {
                 overlay.style.display = 'none';
             }
         });
+    }
+    const titleScreen = document.getElementById('title-screen');
+    const btnStart = document.getElementById('btn-start-game');
+    const btnHelpTitle = document.getElementById('btn-show-help');
+
+    if (btnStart) {
+        btnStart.addEventListener('click', () => {
+            // タイトル画面をフェードアウトまたは非表示
+            titleScreen.style.display = 'none';
+        });
+    }
+
+    if (btnHelpTitle) {
+        btnHelpTitle.addEventListener('click', () => {
+            showOverlay('help'); // ヘルプを表示
+        });
+    }
+
+    // 【追加】設定ボタン（歯車）でヘルプを表示するように変更
+    if (BTN_OPTION) {
+        BTN_OPTION.addEventListener('click', () => {
+            // プレイ中はメニューとして機能させる（今回はシンプルにヘルプとヒントを選べるようにしてもいいが、とりあえずヘルプを表示）
+            showOverlay('help');
+        });
+    }
+    
+    // 【追加】ヒント機能へのアクセス（ノートタブに追加することを想定）
+    // GAME.htmlのノートタブ部分にヒントボタンを追加する場合の処理
+    // ※今回はHTMLへの直接記述ではなく、JSで動的にノートタブへボタンを追加します
+    const noteTabContent = document.getElementById('content-note');
+    if (noteTabContent) {
+        // ヒントボタンを作成して追加
+        const hintBtnContainer = document.createElement('div');
+        hintBtnContainer.style.width = '100%';
+        hintBtnContainer.style.textAlign = 'center';
+        hintBtnContainer.style.marginBottom = '10px';
+        
+        const hintBtn = document.createElement('button');
+        hintBtn.textContent = "💡 計算のヒントを見る";
+        hintBtn.className = "action-button";
+        hintBtn.style.backgroundColor = "#f39c12";
+        hintBtn.style.fontSize = "1.2rem";
+        
+        hintBtn.addEventListener('click', () => {
+            showOverlay('hint');
+        });
+
+        hintBtnContainer.appendChild(hintBtn);
+        // ノートタブの最初（side-panel-boxの前）に挿入
+        noteTabContent.insertBefore(hintBtnContainer, noteTabContent.firstChild);
     }
 }
 
@@ -495,22 +546,31 @@ function showOverlay(type, message = '') {
     const overlay = document.getElementById('overlay');
     const alertSection = document.getElementById('alert-section');
     const resultSection = document.getElementById('result-section');
+    const helpSection = document.getElementById('help-section'); // 【追加】
+    const hintSection = document.getElementById('hint-section'); // 【追加】
     const alertMessageEl = document.getElementById('alert-message');
 
-    if (!overlay || !alertSection || !resultSection) return;
+    if (!overlay) return;
 
-    // 一旦中身を両方隠す
-    alertSection.style.display = 'none';
-    resultSection.style.display = 'none';
+    // 全てのセクションを非表示にする
+    [alertSection, resultSection, helpSection, hintSection].forEach(el => {
+        if(el) el.style.display = 'none';
+    });
 
-    // 指定された方だけ表示する
+    // 指定されたタイプを表示
     if (type === 'alert') {
-        alertSection.style.display = 'block';
-        if (alertMessageEl) alertMessageEl.textContent = message;
+        if (alertSection) {
+            alertSection.style.display = 'block';
+            if (alertMessageEl) alertMessageEl.textContent = message;
+        }
     } else if (type === 'result') {
-        resultSection.style.display = 'block';
+        if (resultSection) resultSection.style.display = 'block';
+    } else if (type === 'help') { // 【追加】
+        if (helpSection) helpSection.style.display = 'block';
+    } else if (type === 'hint') { // 【追加】
+        if (hintSection) hintSection.style.display = 'block';
     }
 
-    // 最後に膜全体を表示
+    // オーバーレイを表示
     overlay.style.display = 'flex';
 }
