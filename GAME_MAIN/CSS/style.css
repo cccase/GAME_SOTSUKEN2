@@ -189,6 +189,53 @@ html {
 }
 
 
+/* ---------------------------------------------------
+   画面が「縦(portrait)」の場合のみ適用されます
+--------------------------------------------------- */
+@media screen and (orientation: portrait) {
+    
+    /* bodyを固定してスクロールを防ぐ */
+    body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        position: fixed;
+    }
+
+    /* ゲーム画面全体を回転させる */
+    #slide-container {
+        /* 幅と高さを入れ替える */
+        width: 100vh; 
+        height: 100vw;
+        
+        /* 画面中央を基準に90度回転 */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(90deg);
+        
+        /* 回転時の位置ズレ防止 */
+        transform-origin: center center;
+        overflow: hidden;
+    }
+
+    /* カスタムカーソルも回転（もしあれば） */
+    #custom-cursor {
+        /* カーソルの向きもゲームに合わせる場合はこれが必要 */
+        transform: translate(-50%, -50%) rotate(90deg) !important;
+    }
+    
+    /* オーバーレイ（設定画面など）も回転 */
+    #overlay {
+        width: 100vh;
+        height: 100vw;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+}
+
+
 /* 変数定義 */
 :root{
     --main-contents-bg: #f0f0f0dd;
