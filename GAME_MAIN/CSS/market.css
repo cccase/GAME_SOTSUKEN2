@@ -175,32 +175,28 @@
 /* ノートタブ用のアイテムスロットの調整 */
 .item-slot.note-slot {
     /* メモ入力用に、テキストを左寄せ、レイアウトを調整 */
-    text-align: left;
-    padding: 3px;
     font-size: 0.7em;
 }
 
 .item-slot.note-slot h4 {
-    margin-bottom: 5px;
+    margin: 0;
     text-align: center;
 }
 
 .item-slot.note-slot p {
     align-items: flex-start;
     font-size: 0.7em;
-    margin: 2px 0;
+    margin: 0;
 }
 
 /* プレイヤーのメモ入力エリア */
 .memo-note {
     width: 100%;
-    height: 100px;
     /* 初期高さを設定 */
     flex-grow: 1;
     /* 残りのスペースを埋める */
-    margin-top: 8px;
     border: 1px solid #777;
-    padding: 5px;
+    padding: 1 rem;
     font-size: 0.85em;
     resize: none;
     /* ユーザーによるサイズ変更を禁止 */
@@ -256,3 +252,7 @@
     background-color: #e0e0e0;
     border-radius: 5px;
 }
+
+
+/* ------------------------------------------------------ */
+/* market.css の修正箇所 */

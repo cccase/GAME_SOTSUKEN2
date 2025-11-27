@@ -35,10 +35,10 @@ let isMouseDown = false; // マウスボタンが押されているか
 
 // 作物データ
 const PRICE_BASE = {
-    'lettuce': { seedPrice: 50, basePrice: 160, growTime: 1, maxVolatility: 0.35, minVolatility: -0.50, label: 'レタス', color: 'rgba(50, 205, 50, 0.8)' },
-    'carrot': { seedPrice: 100, basePrice: 280, growTime: 2, volatility: 0.1, label: 'ニンジン', color: 'rgba(255, 140, 0, 0.8)' },
-    'tomato': { seedPrice: 120, basePrice: 450, growTime: 3, volatility: 0.35, label: 'トマト', color: 'rgba(220, 20, 60, 0.8)' },
-    'onion': { seedPrice: 150, basePrice: 550, growTime: 4, volatility: 0.1, label: 'タマネギ', color: 'rgba(100, 149, 237, 0.8)' }
+    'lettuce': { seedPrice: 50, basePrice: 160, growTime: 1, maxVolatility: 0.35, minVolatility: -0.50, label: 'レタス', mark:'🥬', color: 'rgba(50, 205, 50, 0.8)' },
+    'carrot': { seedPrice: 100, basePrice: 280, growTime: 2, volatility: 0.1, label: 'ニンジン', mark:'🥕', color: 'rgba(255, 140, 0, 0.8)' },
+    'tomato': { seedPrice: 120, basePrice: 450, growTime: 3, volatility: 0.35, label: 'トマト', mark:'🍅', color: 'rgba(220, 20, 60, 0.8)' },
+    'onion': { seedPrice: 150, basePrice: 550, growTime: 4, volatility: 0.1, label: 'タマネギ', mark:'🧅', color: 'rgba(100, 149, 237, 0.8)' }
 };
 
 let priceChartInstance = null;
@@ -309,7 +309,7 @@ function resetSelection() {
 }
 
 function getCropIdFromSeedButtonId(buttonId) {
-    if (buttonId.includes('letus')) return 'lettuce';
+    if (buttonId.includes('lettuce')) return 'lettuce';
     if (buttonId.includes('carot')) return 'carrot';
     if (buttonId.includes('tomato')) return 'tomato';
     if (buttonId.includes('onion')) return 'onion';
@@ -404,7 +404,7 @@ function getCurrentPrice(cropId) {
 function updateCurrentPrices() {
     for (const cropId in gameData.priceHistory) {
         const currentPrice = getCurrentPrice(cropId);
-        const cropName = PRICE_BASE[cropId].label;
+        const cropName = PRICE_BASE[cropId].mark;
 
         if (currentPrice === undefined) continue;
 
@@ -421,7 +421,7 @@ function updateCurrentPrices() {
 
         // ねだんタブ更新
         const elPrice = document.getElementById(`price-${baseId}`);
-        if (elPrice) elPrice.textContent = `${cropName}: ${currentPrice} 円`;
+        if (elPrice) elPrice.innerHTML = `${cropName}<br>${currentPrice} 円`;
 
         // ノートタブ更新
         const elNote = document.getElementById(`note-price-${baseId}`);
