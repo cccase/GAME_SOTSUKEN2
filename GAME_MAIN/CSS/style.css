@@ -140,7 +140,6 @@ html {
     }
 }
 
-
 /* タイトル画面のボタンスタイル調整 */
 #title-screen .action-button:hover {
     transform: translateY(-3px);

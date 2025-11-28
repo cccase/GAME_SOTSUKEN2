@@ -529,6 +529,18 @@ function showOverlay(type, message = '') {
     overlay.style.display = 'flex';
 }
 
+// 「タイトルに戻る」が押されたとき：ヘルプを隠して確認画面を出す
+function showTitleConfirm() {
+    document.getElementById('help-section').style.display = 'none';
+    document.getElementById('confirm-section').style.display = 'block';
+}
+
+// 「いいえ」が押されたとき：確認画面を隠してヘルプに戻す
+function hideTitleConfirm() {
+    document.getElementById('confirm-section').style.display = 'none';
+    document.getElementById('help-section').style.display = 'block';
+}
+
 // ヘルプ用ページ送り
 let currentHelpPage = 1;
 const totalHelpPages = 8;
