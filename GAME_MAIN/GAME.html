@@ -157,7 +157,7 @@
 
             <div id="help-section" style="display: none; text-align: left;">
                 <div>
-                    <div>
+                    <div id="help-page-1" class="help-page" style="display: block;">
                         <h2 style="color: #27ae60; text-align: center; margin-top: 0;">あそびかた</h2>
                         <div style="font-size: 0.9em; line-height: 1.6;">
                             <p><strong>目的：</strong> 12ヶ月（1年間）で、できるだけ多くのお金を稼ごう！</p>
@@ -174,11 +174,35 @@
                             </p>
                         </div>
                     </div>
-                    <button id="help-prev-button"
+
+                    <div id="help-page-2" class="help-page" style="display: none;">
+                        <img src="Images/Slide/1.png" alt="あそびかた画像1" style="width: 100%; height: auto;">
+                    </div>
+                    <div id="help-page-3" class="help-page" style="display: none;">
+                        <img src="Images/Slide/2.png" alt="あそびかた画像2" style="width: 100%; height: auto;">
+                    </div>
+                    <div id="help-page-4" class="help-page" style="display: none;">
+                        <img src="Images/Slide/3.png" alt="あそびかた画像3" style="width: 100%; height: auto;">
+                    </div>
+                    <div id="help-page-5" class="help-page" style="display: none;">
+                        <img src="Images/Slide/4.png" alt="あそびかた画像4" style="width: 100%; height: auto;">
+                    </div>
+                    <div id="help-page-6" class="help-page" style="display: none;">
+                        <img src="Images/Slide/5.png" alt="あそびかた画像5" style="width: 100%; height: auto;">
+                    </div>
+                    <div id="help-page-7" class="help-page" style="display: none;">
+                        <img src="Images/Slide/6.png" alt="あそびかた画像6" style="width: 100%; height: auto;">
+                    </div>
+                    <div id="help-page-8" class="help-page" style="display: none;">
+                        <img src="Images/Slide/7.png" alt="あそびかた画像7" style="width: 100%; height: auto;">
+                    </div>
+
+                    <button id="help-prev-button" onclick="changeHelpPage(-1)"
                         style="float: left; font-size: 1.5em; background: none; border: none; cursor: pointer;">&#8592;</button>
-                    <button id="help-next-button"
-                        style="float: right; font-size: 1.5em; background: none; border: none; cursor: pointer;">&#8594;</button>
+                    <button id="help-next-button" onclick="changeHelpPage(1)"
+                            style="float: right; font-size: 1.5em; background: none; border: none; cursor: pointer;">1/8 &#8594;</button>
                 </div>
+
                 <div style="text-align: center; margin-top: 20px;">
                     <button class="action-button" onclick="document.getElementById('overlay').style.display='none'"
                         style="background-color: #333;">とじる</button>

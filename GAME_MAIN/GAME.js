@@ -35,10 +35,10 @@ let isMouseDown = false; // マウスボタンが押されているか
 
 // 作物データ
 const PRICE_BASE = {
-    'lettuce': { seedPrice: 50, basePrice: 160, growTime: 1, maxVolatility: 0.35, minVolatility: -0.50, label: 'レタス', mark:'🥬', color: 'rgba(50, 205, 50, 0.8)' },
-    'carrot': { seedPrice: 100, basePrice: 280, growTime: 2, volatility: 0.1, label: 'ニンジン', mark:'🥕', color: 'rgba(255, 140, 0, 0.8)' },
-    'tomato': { seedPrice: 120, basePrice: 450, growTime: 3, volatility: 0.35, label: 'トマト', mark:'🍅', color: 'rgba(220, 20, 60, 0.8)' },
-    'onion': { seedPrice: 150, basePrice: 550, growTime: 4, volatility: 0.1, label: 'タマネギ', mark:'🧅', color: 'rgba(100, 149, 237, 0.8)' }
+    'lettuce': { seedPrice: 50, basePrice: 160, growTime: 1, maxVolatility: 0.35, minVolatility: -0.50, label: 'レタス', mark: '🥬', color: 'rgba(50, 205, 50, 0.8)' },
+    'carrot': { seedPrice: 100, basePrice: 280, growTime: 2, volatility: 0.1, label: 'ニンジン', mark: '🥕', color: 'rgba(255, 140, 0, 0.8)' },
+    'tomato': { seedPrice: 120, basePrice: 450, growTime: 3, volatility: 0.35, label: 'トマト', mark: '🍅', color: 'rgba(220, 20, 60, 0.8)' },
+    'onion': { seedPrice: 150, basePrice: 550, growTime: 4, volatility: 0.1, label: 'タマネギ', mark: '🧅', color: 'rgba(100, 149, 237, 0.8)' }
 };
 
 let priceChartInstance = null;
@@ -538,7 +538,7 @@ function showOverlay(type, message = '') {
 
     // 全てのセクションを非表示にする
     [alertSection, resultSection, helpSection, hintSection].forEach(el => {
-        if(el) el.style.display = 'none';
+        if (el) el.style.display = 'none';
     });
 
     // 指定されたタイプを表示
@@ -558,3 +558,57 @@ function showOverlay(type, message = '') {
     // オーバーレイを表示
     overlay.style.display = 'flex';
 }
+
+
+// 変数の初期化
+let currentHelpPage = 1;
+const totalHelpPages = 8;
+
+// ページを切り替える関数
+// direction: -1 (前へ) または 1 (次へ)
+function changeHelpPage(direction) {
+    // 次のページ番号を計算
+    const nextPage = currentHelpPage + direction;
+
+    // 範囲外なら何もしない（念のため）
+    if (nextPage < 1 || nextPage > totalHelpPages) return;
+
+    // 現在のページを非表示にする
+    document.getElementById(`help-page-${currentHelpPage}`).style.display = 'none';
+
+    // 新しいページを表示する
+    document.getElementById(`help-page-${nextPage}`).style.display = 'block';
+
+    // 現在のページ番号を更新
+    currentHelpPage = nextPage;
+
+    // ボタンとカウンターの表示を更新する
+    updateHelpControls();
+}
+
+// ボタンとページ数表記の更新を行う関数
+function updateHelpControls() {
+    const prevBtn = document.getElementById('help-prev-button');
+    const nextBtn = document.getElementById('help-next-button');
+    // 1ページ目なら「戻る」を消す、それ以外なら表示
+    if (currentHelpPage === 1) {
+        prevBtn.style.display = 'none';
+    } else {
+        prevBtn.style.display = 'inline'; // または block/inline-block
+    }
+
+    // 最後のページなら「次へ」を消す、それ以外なら表示
+    if (currentHelpPage === totalHelpPages) {
+        nextBtn.textContent = `${currentHelpPage} / ${totalHelpPages}`;
+    } else {
+        nextBtn.textContent = `${currentHelpPage} / ${totalHelpPages} →`;
+    }
+
+    // ページ数の表記を更新 (例: 1 / 8)
+}
+
+// 初期化処理（ページ読み込み時やヘルプを開いた時に呼ぶと確実です）
+// 現在のHTML構造だとstyle="display:none"で隠れているため、
+// 初回表示時に updateHelpControls() を呼んでおくとボタン状態が正しくセットされます。
+// 以下はスクリプト読み込み時に一度実行しておく例です。
+updateHelpControls();
