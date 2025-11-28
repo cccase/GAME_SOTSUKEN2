@@ -1,16 +1,13 @@
-/* farm.css (畑エリア専用) - Refactored */
+/* farm.css (畑エリア専用) */
 
-/* 畑のエリア (正方形を維持し、縮小を禁止) */
+/* 畑のエリア */
 #farm-area {
     font-size: 2vw;
     height: 100%;
     aspect-ratio: 1 / 1;
     background-color: #f0f0f0dd;
-    /* 正方形を維持 */
     flex-shrink: 0;
-    /* 画面が狭くなっても縮小しないように設定 */
 
-    /* その他のスタイルは維持 */
     border: 1px solid black;
     display: flex;
     flex-direction: column;
@@ -42,13 +39,10 @@
 
 /* --- 畑のマス目 (farm-plot) のスタイル --- */
 .farm-plot {
-    /* 畑のマス目。10x10のグリッドの各セル */
     width: 100%;
     height: 100%;
-    /* マス目を区切る枠線を追加 */
     border: 1px solid rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
-    /* マス目が見えるように背景を少し明るく */
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
     font-size: 0.4em;
@@ -58,7 +52,6 @@
     cursor: pointer;
     transition: background-color 0.2s;
     user-select: none;
-    /* テキスト選択を禁止 */
 }
 
 /* 植え付けモード時のカーソル表示 */
@@ -70,12 +63,11 @@
 /* 収穫可能なマスの表示 */
 .farm-plot.ready-to-harvest {
     background-color: #f39c12;
-    /* 収穫可能な作物の色 */
     cursor: url('../Images/dougu_kuwa_bichu_resize.png') 16 16, auto;
     border: #fdf900 solid 2px;
 }
 
-/* 作物の色分け（任意） */
+/* 作物の色分け */
 .farm-plot.lettuce {
     background-color: rgba(50, 205, 50, 0.5);
 }
@@ -93,8 +85,8 @@
 }
 
 #farm-button.active {
-    background-color: #f39c12; /* 収穫可能なマスと合わせたオレンジ色 */
+    background-color: #f39c12;
     color: white; 
     border: 2px solid #e67e22;
-    box-shadow: 0 0 8px rgba(243, 156, 18, 1); /* 目立つように影を付ける */
+    box-shadow: 0 0 8px rgba(243, 156, 18, 1);
 }

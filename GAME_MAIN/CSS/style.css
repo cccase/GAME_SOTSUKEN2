@@ -1,11 +1,10 @@
-/* style.css (メイン・共通レイアウト) - Refactored */
+/* style.css (メイン・共通レイアウト) */
 
 body,
 html {
     margin: 0;
     padding: 0;
     height: 100%;
-    /* 画面全体を使うために必須 */
     font-family: sans-serif;
     background-color: #f0f0f0;
 }
@@ -13,53 +12,41 @@ html {
 /* 全体を囲むコンテナ：画面全体を占有 */
 #slide-container {
     width: 100vw;
-    /* Viewport Width (画面幅) */
     height: 100vh;
-    /* Viewport Height (画面高) */
     display: flex;
     flex-direction: column;
-    /* 縦に並べる（ヘッダー、メイン） */
     background-color: white;
-    /* スライドの背景 */
     box-sizing: border-box;
-    /* paddingやborderをwidth/heightに含める */
 
     /* --- 背景画像の設定 --- */
-    /* 画像がない場合の予備色は上で設定済み */
-    background-image: url('../Images/bg_natural_sougen.jpg'); /* 画像のパス */
-    background-repeat: no-repeat; /* 繰り返しなし */
-    background-position: center; /* 中央寄せ */
-    background-size: cover; /* 画面全体を覆うように拡大縮小 */
+    background-image: url('../Images/bg_natural_sougen.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 /* --- ヘッダー部分のスタイル --- */
 #game-header {
     display: flex;
     justify-content: space-between;
-    /* 均等に配置 */
     padding: 1% 2%;
-    /* 上下の余白を確保 */
     border-bottom: 1px solid #ccc;
     flex-shrink: 0;
-    /* 縮小させない */
 }
 
 .ui-box {
     padding: 0.5% 1%;
     border: 1px solid black;
     background-color: #f0f0f0;
-    /* 色は無視するとのことですが、境界線として */
     text-align: center;
     font-weight: bold;
     font-size: 200%;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* サイズを柔軟にする */
     flex-grow: 1;
     margin: 0 1%;
     min-width: 150px;
-    /* 最小幅を設定してつぶれすぎないように */
     min-height: 50px;
 }
 
@@ -68,25 +55,19 @@ html {
     min-width: 0px;
     height: 100%;
     aspect-ratio: 1 / 1;
-    /* 画像を表示 */
     background-image: url('../Images/haguruma_icon-pit.png');
     background-size: 80%;
-    /* 画像をbox内で適切に表示 */
     background-repeat: no-repeat;
     background-position: center;
-    /* テキストは不要なので非表示 */
     text-indent: -9999px;
-    /* カーソルをポインタに変更 */
     cursor: pointer;
 }
 
 /* --- メインコンテンツ（畑とマーケット）のスタイル --- */
 #main-content {
     flex-grow: 1;
-    /* 残りのスペースを全て占有 */
     display: flex;
     padding: 2%;
-    /* 畑の大きさが決まっても、このコンテナは必ず横にスクロールしない */
     overflow: hidden;
 }
 
@@ -135,7 +116,6 @@ html {
     animation: popIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
-/* スマホ用の調整も忘れずに変更 */
 @media (max-width: 700px) {
     #overlay-window {
         max-width: 100vw;
@@ -153,7 +133,6 @@ html {
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* スマホなど画面が狭いとき用 */
 @media (max-width: 600px) {
     #result-window {
         width: 85%;
@@ -169,7 +148,7 @@ html {
 }
 #title-screen .action-button:active {
     transform: translateY(2px);
-    box-shadow: none !important; /* 押したときは影を消す */
+    box-shadow: none !important;
 }
 
 /* ヘルプ・ヒントセクション内のスタイル */
@@ -185,7 +164,7 @@ html {
 
 /* ノートタブに追加されるヒントボタンの調整 */
 #content-note .action-button {
-    box-shadow: 0 4px 0 #d35400; /* 立体感を統一 */
+    box-shadow: 0 4px 0 #d35400;
 }
 #content-note .action-button:active {
     box-shadow: none;
@@ -193,12 +172,8 @@ html {
 }
 
 
-/* ---------------------------------------------------
-   画面が「縦(portrait)」の場合のみ適用されます
---------------------------------------------------- */
+/* --- 画面回転（縦向き時）の設定 --- */
 @media screen and (orientation: portrait) {
-    
-    /* bodyを固定してスクロールを防ぐ */
     body {
         width: 100vw;
         height: 100vh;
@@ -206,30 +181,23 @@ html {
         position: fixed;
     }
 
-    /* ゲーム画面全体を回転させる */
     #slide-container {
-        /* 幅と高さを入れ替える */
         width: 100vh; 
         height: 100vw;
         
-        /* 画面中央を基準に90度回転 */
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(90deg);
         
-        /* 回転時の位置ズレ防止 */
         transform-origin: center center;
         overflow: hidden;
     }
 
-    /* カスタムカーソルも回転（もしあれば） */
     #custom-cursor {
-        /* カーソルの向きもゲームに合わせる場合はこれが必要 */
         transform: translate(-50%, -50%) rotate(90deg) !important;
     }
     
-    /* オーバーレイ（設定画面など）も回転 */
     #overlay {
         width: 100vh;
         height: 100vw;
@@ -242,31 +210,29 @@ html {
 /* アンケートボタンのスタイル */
 #survey-link-button {
     display: inline-block;
-    background-color: #3498db; /* 青色 */
+    background-color: #3498db;
     color: white;
     font-size: 1.3em;
     font-weight: bold;
     text-decoration: none;
     padding: 15px 30px;
     border-radius: 10px;
-    box-shadow: 0 5px 0 #2980b9; /* 立体的な影 */
+    box-shadow: 0 5px 0 #2980b9;
     margin-top: 10px;
-    transition: all 0.1s; /* アニメーション */
+    transition: all 0.1s;
 }
 
-/* マウスを乗せたとき */
 #survey-link-button:hover {
-    background-color: #5dade2; /* 少し明るく */
-    transform: translateY(-2px); /* 少し浮き上がる */
+    background-color: #5dade2;
+    transform: translateY(-2px);
 }
 
-/* クリックしたとき */
 #survey-link-button:active {
-    box-shadow: 0 2px 0 #2980b9; /* 影を小さく */
-    transform: translateY(3px); /* 沈み込む */
+    box-shadow: 0 2px 0 #2980b9;
+    transform: translateY(3px);
 }
+
 /* 変数定義 */
 :root{
     --main-contents-bg: #f0f0f0dd;
 }
-

@@ -3,7 +3,7 @@
 // =========================================================================
 const FARM_SIZE = 10;
 const ENABLE_GAME_TIMER = true;
-const GAME_DURATION_MONTHS = 12; // 終了する月
+const GAME_DURATION_MONTHS = 12;
 
 // DOM要素
 const FARM_BOX = document.getElementById('farm-box');
@@ -12,7 +12,7 @@ const NEXT_MONTH_BUTTON = document.getElementById('next-month-button');
 const MONEY_DISPLAY = document.querySelector('#gold-box');
 const DATE_DISPLAY = document.querySelector('#date-box');
 const TAB_PRICE_BTN = document.getElementById('tab-price');
-const BTN_OPTION = document.getElementById('option-box'); // ← これが必要です！
+const BTN_OPTION = document.getElementById('option-box');
 
 // ゲームデータ
 let gameData = {
@@ -31,7 +31,7 @@ let gameData = {
 // 操作状態
 let selectedSeed = null;
 let isHarvesting = false;
-let isMouseDown = false; // マウスボタンが押されているか
+let isMouseDown = false;
 
 // 作物データ
 const PRICE_BASE = {
@@ -48,16 +48,13 @@ let priceChartInstance = null;
 // 2. 初期化処理 (DOMContentLoaded)
 // =========================================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // 過去データの生成
     generateInitialHistory();
 
-    // UIと畑の初期化
     initTabSwitcher();
     initFarmGrid();
     updateInfoPanel();
     updateCurrentPrices();
 
-    // イベントリスナー設定
     setupEventListeners();
 });
 
@@ -66,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // 3. イベントリスナー設定関数
 // =========================================================================
 function setupEventListeners() {
-    // マーケットの種ボタン (親要素item-slot全体で反応)
+    // マーケットの種ボタン
     document.querySelectorAll('.item-slot').forEach(slotElement => {
         if (slotElement.querySelector('.market-button')) {
             slotElement.addEventListener('click', handleItemSlotClick);
@@ -83,14 +80,14 @@ function setupEventListeners() {
         NEXT_MONTH_BUTTON.addEventListener('click', handleNextMonthClick);
     }
 
-    // ねだんタブ (グラフ描画)
+    // ねだんタブ
     if (TAB_PRICE_BTN) {
         TAB_PRICE_BTN.addEventListener('click', () => {
             setTimeout(renderPriceChart, 10);
         });
     }
 
-    // 結果ウィンドウを閉じる処理 (オーバーレイクリック)
+    // 結果ウィンドウを閉じる処理
     const overlay = document.getElementById('overlay');
     if (overlay) {
         overlay.addEventListener('click', (event) => {
@@ -105,21 +102,19 @@ function setupEventListeners() {
 
     if (btnStart) {
         btnStart.addEventListener('click', () => {
-            // タイトル画面をフェードアウトまたは非表示
             titleScreen.style.display = 'none';
         });
     }
 
     if (btnHelpTitle) {
         btnHelpTitle.addEventListener('click', () => {
-            showOverlay('help'); // ヘルプを表示
+            showOverlay('help');
         });
     }
 
-    // 【追加】設定ボタン（歯車）でヘルプを表示するように変更
+    // 設定ボタン
     if (BTN_OPTION) {
         BTN_OPTION.addEventListener('click', () => {
-            // プレイ中はメニューとして機能させる（今回はシンプルにヘルプとヒントを選べるようにしてもいいが、とりあえずヘルプを表示）
             showOverlay('help');
         });
     }
@@ -144,7 +139,6 @@ function initFarmGrid() {
         plot.classList.add('farm-plot');
         plot.dataset.index = i;
 
-        // PC操作: マウスダウンで開始、オーバーで連続実行
         plot.addEventListener('mousedown', (event) => {
             if (event.button !== 0) return;
             isMouseDown = true;
@@ -157,13 +151,11 @@ function initFarmGrid() {
         FARM_BOX.appendChild(plot);
     }
 
-    // PC操作: ドラッグ終了
     document.addEventListener('mouseup', () => isMouseDown = false);
 
-    // モバイル操作: タッチ対応
     FARM_BOX.addEventListener('touchstart', (event) => {
         isMouseDown = true;
-        event.preventDefault(); // スクロール防止
+        event.preventDefault();
         const targetPlot = event.touches[0].target.closest('.farm-plot');
         if (targetPlot) handlePlotClick({ currentTarget: targetPlot });
     }, { passive: false });
@@ -188,7 +180,7 @@ function handlePlotClick(event) {
 
     // 種まき
     if (selectedSeed) {
-        if (plotData) return; // 既に植わっている
+        if (plotData) return;
 
         const seedPrice = PRICE_BASE[selectedSeed].seedPrice;
         if (gameData.money < seedPrice) {
@@ -275,11 +267,10 @@ function handleItemSlotClick(event) {
 
     const cropId = getCropIdFromSeedButtonId(slotElement.id);
 
-    // 同じ種なら選択解除、違う種なら選択
     if (selectedSeed === cropId) {
         resetSelection();
     } else {
-        resetSelection(); // 一旦リセット
+        resetSelection();
         selectedSeed = cropId;
         slotElement.classList.add('selected');
         FARM_BOX.classList.add('planting-mode');
@@ -329,7 +320,6 @@ function updateInfoPanel() {
 // 6. ゲーム進行・価格ロジック
 // =========================================================================
 function handleNextMonthClick() {
-    // すでに終了している場合
     if (ENABLE_GAME_TIMER && gameData.month > GAME_DURATION_MONTHS) {
         showGameResult();
         return;
@@ -337,20 +327,17 @@ function handleNextMonthClick() {
 
     gameData.month++;
 
-    // 12ヶ月目（最終月）になったらボタンを「終了」に変える
     if (ENABLE_GAME_TIMER && gameData.month === GAME_DURATION_MONTHS) {
         NEXT_MONTH_BUTTON.textContent = "終了";
         NEXT_MONTH_BUTTON.style.backgroundColor = "#e74c3c";
         NEXT_MONTH_BUTTON.style.color = "white";
     }
 
-    // 12ヶ月を超えたら（終了ボタンを押した瞬間）結果を表示
     if (ENABLE_GAME_TIMER && gameData.month > GAME_DURATION_MONTHS) {
         showGameResult();
         return;
     }
 
-    // 価格変動 (奇数月のみ)
     const shouldFluctuate = (gameData.month % 2 !== 0);
     for (const cropId in gameData.priceHistory) {
         const history = gameData.priceHistory[cropId];
@@ -359,9 +346,8 @@ function handleNextMonthClick() {
         }
     }
 
-    // 月替わりのリセット処理
     resetSelection();
-    isHarvesting = true; // デフォルトで収穫モードに
+    isHarvesting = true;
     HARVEST_BUTTON.classList.add('active');
 
     updateInfoPanel();
@@ -371,7 +357,7 @@ function handleNextMonthClick() {
 
 function generateInitialHistory() {
     const PAST_HISTORY_COUNT = 6;
-    for (let i = 0; i < PAST_HISTORY_COUNT + 1; i++) { // +1 は現在の月分
+    for (let i = 0; i < PAST_HISTORY_COUNT + 1; i++) {
         for (const cropId in gameData.priceHistory) {
             gameData.priceHistory[cropId].push(generateMonthlyPrice(cropId));
         }
@@ -389,7 +375,7 @@ function generateMonthlyPrice(cropId) {
     }
 
     let newPrice = Math.round(base.basePrice * (1 + changeRate));
-    // 価格制限
+    
     if (newPrice < base.seedPrice + 10) newPrice = base.seedPrice + 10;
     if (newPrice > base.basePrice * 2) newPrice = base.basePrice * 2;
 
@@ -408,15 +394,6 @@ function updateCurrentPrices() {
 
         if (currentPrice === undefined) continue;
 
-        // DOM IDのマッピング
-        const ids = {
-            priceTab: (cropId === 'lettuce') ? 'price-lettuce' : `price-${cropId}`, // ID規則のゆらぎ吸収
-            noteTab: `note-price-${cropId}`,
-            marketTab: `market-price-${cropId}`
-        };
-
-        // ID規則の補正（HTML側のIDが price-lettuce, price-carrot 等の場合）
-        // HTMLのIDと合わせて調整
         let baseId = cropId;
 
         // ねだんタブ更新
@@ -445,10 +422,8 @@ function showGameResult() {
         HARVEST_BUTTON.style.backgroundColor = "gray";
     }
 
-    // アンケートリンク
     const surveyLink = "https://forms.gle/4B6jshohSmWRDudG9";
 
-    // 結果メッセージの作成（リンクを追加）
     const message = `${GAME_DURATION_MONTHS}ヶ月間 おつかれさまでした！<br>` +
         `あなたの おかね は <strong>${gameData.money} 円</strong> です。<br><br>` +
         `<a id="survey-link-button" href="${surveyLink}" target="_blank">アンケートにご協力ください &#10148;</a>`;
@@ -522,26 +497,22 @@ function getChartData() {
 }
 
 // =========================================================================
-// 汎用オーバーレイ表示関数 (これを新たに追加)
-// type: 'alert' または 'result'
-// message: アラートに表示したい文字
+// 8. 汎用オーバーレイ表示関数
 // =========================================================================
 function showOverlay(type, message = '') {
     const overlay = document.getElementById('overlay');
     const alertSection = document.getElementById('alert-section');
     const resultSection = document.getElementById('result-section');
-    const helpSection = document.getElementById('help-section'); // 【追加】
-    const hintSection = document.getElementById('hint-section'); // 【追加】
+    const helpSection = document.getElementById('help-section');
+    const hintSection = document.getElementById('hint-section');
     const alertMessageEl = document.getElementById('alert-message');
 
     if (!overlay) return;
 
-    // 全てのセクションを非表示にする
     [alertSection, resultSection, helpSection, hintSection].forEach(el => {
         if (el) el.style.display = 'none';
     });
 
-    // 指定されたタイプを表示
     if (type === 'alert') {
         if (alertSection) {
             alertSection.style.display = 'block';
@@ -549,66 +520,45 @@ function showOverlay(type, message = '') {
         }
     } else if (type === 'result') {
         if (resultSection) resultSection.style.display = 'block';
-    } else if (type === 'help') { // 【追加】
+    } else if (type === 'help') {
         if (helpSection) helpSection.style.display = 'block';
-    } else if (type === 'hint') { // 【追加】
+    } else if (type === 'hint') {
         if (hintSection) hintSection.style.display = 'block';
     }
 
-    // オーバーレイを表示
     overlay.style.display = 'flex';
 }
 
-
-// 変数の初期化
+// ヘルプ用ページ送り
 let currentHelpPage = 1;
 const totalHelpPages = 8;
 
-// ページを切り替える関数
-// direction: -1 (前へ) または 1 (次へ)
 function changeHelpPage(direction) {
-    // 次のページ番号を計算
     const nextPage = currentHelpPage + direction;
-
-    // 範囲外なら何もしない（念のため）
     if (nextPage < 1 || nextPage > totalHelpPages) return;
 
-    // 現在のページを非表示にする
     document.getElementById(`help-page-${currentHelpPage}`).style.display = 'none';
-
-    // 新しいページを表示する
     document.getElementById(`help-page-${nextPage}`).style.display = 'block';
 
-    // 現在のページ番号を更新
     currentHelpPage = nextPage;
-
-    // ボタンとカウンターの表示を更新する
     updateHelpControls();
 }
 
-// ボタンとページ数表記の更新を行う関数
 function updateHelpControls() {
     const prevBtn = document.getElementById('help-prev-button');
     const nextBtn = document.getElementById('help-next-button');
-    // 1ページ目なら「戻る」を消す、それ以外なら表示
+    
     if (currentHelpPage === 1) {
         prevBtn.style.display = 'none';
     } else {
-        prevBtn.style.display = 'inline'; // または block/inline-block
+        prevBtn.style.display = 'inline';
     }
 
-    // 最後のページなら「次へ」を消す、それ以外なら表示
     if (currentHelpPage === totalHelpPages) {
         nextBtn.innerHTML = `<span style="color: black;">${currentHelpPage} / ${totalHelpPages}</span>`;
     } else {
         nextBtn.innerHTML = `<span style = "color: black;"> ${currentHelpPage} / ${totalHelpPages}</span > ▶`;
     }
-
-    // ページ数の表記を更新 (例: 1 / 8)
 }
 
-// 初期化処理（ページ読み込み時やヘルプを開いた時に呼ぶと確実です）
-// 現在のHTML構造だとstyle="display:none"で隠れているため、
-// 初回表示時に updateHelpControls() を呼んでおくとボタン状態が正しくセットされます。
-// 以下はスクリプト読み込み時に一度実行しておく例です。
 updateHelpControls();
