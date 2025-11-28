@@ -73,8 +73,7 @@
                     </div>
 
                     <div id="content-note" class="tab-content">
-                        <div class="side-panel-box"
-                            style="flex-direction: column; justify-content: flex-start;">
+                        <div class="side-panel-box" style="flex-direction: column; justify-content: flex-start;">
 
                             <button id="hint-button" class="action-button"
                                 style="width: 90%; margin-bottom: 10px; background-color: #f39c12; font-size: 1.2rem; box-shadow: 0 4px 0 #d35400;">
@@ -86,8 +85,8 @@
                                     <h4>レタス 🥬</h4>
                                     <p>ねだんが大きく変わる！</p>
                                     <p>
-                                    買うねだん: 50 円<br>
-                                    しゅうかくまで: 1ヶ月</p>
+                                        買うねだん: 50 円<br>
+                                        しゅうかくまで: 1ヶ月</p>
                                     <p id="note-price-lettuce">今の売るねだん：--- 円</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
@@ -95,8 +94,8 @@
                                     <h4>ニンジン 🥕</h4>
                                     <p>いちばん安定！</p>
                                     <p>
-                                    買うねだん: 100 円<br>
-                                    しゅうかくまで: 2ヶ月</p>
+                                        買うねだん: 100 円<br>
+                                        しゅうかくまで: 2ヶ月</p>
                                     <p id="note-price-carrot">今の売るねだん：--- 円</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
@@ -104,8 +103,8 @@
                                     <h4>トマト 🍅</h4>
                                     <p>ねだんが下がりやすいかも</p>
                                     <p>
-                                    買うねだん: 120 円<br>
-                                    しゅうかくまで: 3ヶ月</p>
+                                        買うねだん: 120 円<br>
+                                        しゅうかくまで: 3ヶ月</p>
                                     <p id="note-price-tomato">今の売るねだん：--- 円</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
@@ -113,8 +112,8 @@
                                     <h4>タマネギ 🧅</h4>
                                     <p>ゆっくり安全に！</p>
                                     <p>
-                                    買うねだん: 150 円<br>
-                                    しゅうかくまで: 4ヶ月</p>
+                                        買うねだん: 150 円<br>
+                                        しゅうかくまで: 4ヶ月</p>
                                     <p id="note-price-onion">今の売るねだん：--- 円</p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
@@ -157,24 +156,34 @@
             </div>
 
             <div id="help-section" style="display: none; text-align: left;">
-                <h2 style="color: #27ae60; text-align: center; margin-top: 0;">あそびかた</h2>
-                <div style="font-size: 0.9em; line-height: 1.6;">
-                    <p><strong>目的：</strong> 12ヶ月（1年間）で、できるだけ多くのお金を稼ごう！</p>
-                    <hr>
-                    <p><strong>1. たねを買う</strong><br>
-                        「マーケット」で野菜の種を選んで買います。<br>
-                        野菜によって「育つまでの時間」と「買うねだん」が違います。</p>
-                    <p><strong>2. 育てる</strong><br>
-                        畑のあいているところをタッチして種を植えます。<br>
-                        「次の月へ」を押すと、時間が進んで野菜が育ちます。</p>
-                    <p><strong>3. 売る（しゅうかく）</strong><br>
-                        育ちきった野菜を「しゅうかく」すると、自動的に売られてお金になります。<br>
-                        <span style="color: #e74c3c;">※「売るねだん」は毎月変わるよ！安くなっているときは注意！</span>
-                    </p>
+                <div>
+                    <div>
+                        <h2 style="color: #27ae60; text-align: center; margin-top: 0;">あそびかた</h2>
+                        <div style="font-size: 0.9em; line-height: 1.6;">
+                            <p><strong>目的：</strong> 12ヶ月（1年間）で、できるだけ多くのお金を稼ごう！</p>
+                            <hr>
+                            <p><strong>1. たねを買う</strong><br>
+                                「マーケット」で野菜の種を選んで買います。<br>
+                                野菜によって「育つまでの時間」と「買うねだん」が違います。</p>
+                            <p><strong>2. 育てる</strong><br>
+                                畑のあいているところをタッチして種を植えます。<br>
+                                「次の月へ」を押すと、時間が進んで野菜が育ちます。</p>
+                            <p><strong>3. 売る（しゅうかく）</strong><br>
+                                育ちきった野菜を「しゅうかく」すると、自動的に売られてお金になります。<br>
+                                <span style="color: #e74c3c;">※「売るねだん」は毎月変わるよ！安くなっているときは注意！</span>
+                            </p>
+                        </div>
+                    </div>
+                    <button id="help-prev-button"
+                        style="float: left; font-size: 1.5em; background: none; border: none; cursor: pointer;">&#8592;</button>
+                    <button id="help-next-button"
+                        style="float: right; font-size: 1.5em; background: none; border: none; cursor: pointer;">&#8594;</button>
                 </div>
                 <div style="text-align: center; margin-top: 20px;">
                     <button class="action-button" onclick="document.getElementById('overlay').style.display='none'"
                         style="background-color: #333;">とじる</button>
+                    <button class="action-button" onclick="location.reload()"
+                        style="background-color: #e74c3c; margin-left: 15px;">タイトルに戻る</button>
                 </div>
             </div>
 
