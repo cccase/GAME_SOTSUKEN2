@@ -239,7 +239,32 @@ html {
     }
 }
 
+/* アンケートボタンのスタイル */
+#survey-link-button {
+    display: inline-block;
+    background-color: #3498db; /* 青色 */
+    color: white;
+    font-size: 1.3em;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 0 #2980b9; /* 立体的な影 */
+    margin-top: 10px;
+    transition: all 0.1s; /* アニメーション */
+}
 
+/* マウスを乗せたとき */
+#survey-link-button:hover {
+    background-color: #5dade2; /* 少し明るく */
+    transform: translateY(-2px); /* 少し浮き上がる */
+}
+
+/* クリックしたとき */
+#survey-link-button:active {
+    box-shadow: 0 2px 0 #2980b9; /* 影を小さく */
+    transform: translateY(3px); /* 沈み込む */
+}
 /* 変数定義 */
 :root{
     --main-contents-bg: #f0f0f0dd;

@@ -451,7 +451,7 @@ function showGameResult() {
     // 結果メッセージの作成（リンクを追加）
     const message = `${GAME_DURATION_MONTHS}ヶ月間 おつかれさまでした！<br>` +
         `あなたの おかね は <strong>${gameData.money} 円</strong> です。<br><br>` +
-        `<strong><a href="${surveyLink}" target="_blank" style="color: #3498db; text-decoration: underline;">アンケートにご協力ください</a></strong>`;
+        `<a id="survey-link-button" href="${surveyLink}" target="_blank">アンケートにご協力ください &#10148;</a>`;
 
     const resultMessageEl = document.getElementById('result-message');
     if (resultMessageEl) resultMessageEl.innerHTML = message;
@@ -599,9 +599,9 @@ function updateHelpControls() {
 
     // 最後のページなら「次へ」を消す、それ以外なら表示
     if (currentHelpPage === totalHelpPages) {
-        nextBtn.textContent = `${currentHelpPage} / ${totalHelpPages}`;
+        nextBtn.innerHTML = `<span style="color: black;">${currentHelpPage} / ${totalHelpPages}</span>`;
     } else {
-        nextBtn.textContent = `${currentHelpPage} / ${totalHelpPages} →`;
+        nextBtn.innerHTML = `<span style = "color: black;"> ${currentHelpPage} / ${totalHelpPages}</span > ▶`;
     }
 
     // ページ数の表記を更新 (例: 1 / 8)
