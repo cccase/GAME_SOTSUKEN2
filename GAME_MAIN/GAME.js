@@ -35,10 +35,10 @@ let isMouseDown = false;
 
 // 作物データ
 const PRICE_BASE = {
-    'lettuce': { seedPrice: 50, basePrice: 160, growTime: 1, maxVolatility: 0.35, minVolatility: -0.50, label: 'レタス', mark: '🥬', color: 'rgba(50, 205, 50, 0.8)' },
-    'carrot': { seedPrice: 100, basePrice: 280, growTime: 2, volatility: 0.1, label: 'ニンジン', mark: '🥕', color: 'rgba(255, 140, 0, 0.8)' },
-    'tomato': { seedPrice: 120, basePrice: 450, growTime: 3, volatility: 0.35, label: 'トマト', mark: '🍅', color: 'rgba(220, 20, 60, 0.8)' },
-    'onion': { seedPrice: 150, basePrice: 550, growTime: 4, volatility: 0.1, label: 'タマネギ', mark: '🧅', color: 'rgba(100, 149, 237, 0.8)' }
+    'lettuce': { seedPrice: 50, fixedSellPrice: 160, growTime: 1, maxVolatility: 0.85, minVolatility: -0.5, label: 'レタス', mark: '🥬', color: 'rgba(50, 205, 50, 0.8)' },
+    'carrot': { seedPrice: 100, fixedSellPrice: 280, growTime: 2, volatility: 0.15, label: 'ニンジン', mark: '🥕', color: 'rgba(255, 140, 0, 0.8)' },
+    'tomato': { seedPrice: 120, fixedSellPrice: 450, growTime: 3, volatility: 0.35, label: 'トマト', mark: '🍅', color: 'rgba(220, 20, 60, 0.8)' },
+    'onion': { seedPrice: 150, fixedSellPrice: 550, growTime: 4, volatility: 0.15, label: 'タマネギ', mark: '🧅', color: 'rgba(100, 149, 237, 0.8)' }
 };
 
 let priceChartInstance = null;
@@ -181,8 +181,8 @@ function handlePlotClick(event) {
     // 種まき
     if (selectedSeed) {
         if (plotData) return;
+        const seedPrice = getCurrentPrice(selectedSeed);
 
-        const seedPrice = PRICE_BASE[selectedSeed].seedPrice;
         if (gameData.money < seedPrice) {
             showOverlay('alert', 'お金が足りません！');
         } else {
@@ -197,14 +197,14 @@ function handlePlotClick(event) {
         if (!plotData || !plotElement.classList.contains('ready-to-harvest')) return;
 
         const cropId = plotData.cropId;
-        const currentPrice = getCurrentPrice(cropId);
+        const currentSellPrice = PRICE_BASE[cropId].fixedSellPrice;
 
-        if (currentPrice === undefined) {
+        if (currentSellPrice === undefined) {
             alert('価格データエラー');
             return;
         }
 
-        gameData.money += currentPrice;
+        gameData.money += currentSellPrice;
         gameData.farmPlots[index] = null;
         updateInfoPanel();
         renderFarmPlots();
@@ -364,6 +364,8 @@ function generateInitialHistory() {
     }
 }
 
+
+// ... (省略)
 function generateMonthlyPrice(cropId) {
     const base = PRICE_BASE[cropId];
     let changeRate;
@@ -373,14 +375,17 @@ function generateMonthlyPrice(cropId) {
     } else {
         changeRate = (Math.random() * 2 * base.volatility) - base.volatility;
     }
+    let newPrice = Math.round(base.seedPrice * (1 + changeRate));
 
-    let newPrice = Math.round(base.basePrice * (1 + changeRate));
-    
-    if (newPrice < base.seedPrice + 10) newPrice = base.seedPrice + 10;
-    if (newPrice > base.basePrice * 2) newPrice = base.basePrice * 2;
+    if (newPrice < 1) newPrice = 1;
+
+    // 上限価格は seedPrice の 2.5倍に設定（過度な高騰の抑制）
+    if (newPrice > base.seedPrice * 2.5) newPrice = Math.round(base.seedPrice * 2.5);
 
     return newPrice;
 }
+// ... (省略)
+
 
 function getCurrentPrice(cropId) {
     const history = gameData.priceHistory[cropId];
@@ -396,17 +401,17 @@ function updateCurrentPrices() {
 
         let baseId = cropId;
 
-        // ねだんタブ更新
-        const elPrice = document.getElementById(`price-${baseId}`);
-        if (elPrice) elPrice.innerHTML = `${cropName}<br>${currentPrice} 円`;
+        // マーケットタブ更新
+        const elMarket = document.getElementById(`market-price-${baseId}`);
+        if (elMarket) elMarket.textContent = `種を買うねだん: ${currentPrice} 円`;
 
         // ノートタブ更新
         const elNote = document.getElementById(`note-price-${baseId}`);
-        if (elNote) elNote.textContent = `今のねだん：${currentPrice} 円`;
+        if (elNote) elNote.textContent = `種を買うねだん：${currentPrice} 円`;
 
-        // マーケットタブ更新
-        const elMarket = document.getElementById(`market-price-${baseId}`);
-        if (elMarket) elMarket.textContent = `今のねだん: ${currentPrice} 円`;
+        // ねだんタブ更新
+        const elPrice = document.getElementById(`price-${baseId}`);
+        if (elPrice) elPrice.innerHTML = `${cropName}<br>${currentPrice} 円`;
     }
 }
 
@@ -446,25 +451,29 @@ function renderPriceChart() {
     if (!ctx) return;
 
     const data = getChartData();
-    const suggestedMax = Math.ceil(Math.max(...data.datasets.flatMap(d => d.data)) / 100) * 100;
-    const suggestedMin = Math.floor(PRICE_BASE.lettuce.seedPrice / 10) * 10;
 
     const chartOptions = {
         responsive: true,
         maintainAspectRatio: false,
-        title: { display: true, text: 'ねだんチャート', fontSize: 16 },
+        title: { display: true, text: '種を買うねだんチャート', fontSize: 16 },
         scales: {
             xAxes: [{ scaleLabel: { display: true, labelString: '時間' } }],
             yAxes: [{
                 scaleLabel: { display: true, labelString: 'ねだん (円)' },
-                ticks: { beginAtZero: false, suggestedMax, suggestedMin }
+                ticks: {
+                    beginAtZero: false,
+                    min: 0,
+                    max: 200
+                }
+
             }]
         }
     };
 
     if (priceChartInstance) {
         priceChartInstance.data = data;
-        priceChartInstance.options.scales.yAxes[0].ticks.suggestedMax = suggestedMax;
+        priceChartInstance.options.scales.yAxes[0].ticks.min = 0;
+        priceChartInstance.options.scales.yAxes[0].ticks.max = 200;
         priceChartInstance.update();
     } else {
         priceChartInstance = new Chart(ctx, { type: 'line', data: data, options: chartOptions });
@@ -559,7 +568,7 @@ function changeHelpPage(direction) {
 function updateHelpControls() {
     const prevBtn = document.getElementById('help-prev-button');
     const nextBtn = document.getElementById('help-next-button');
-    
+
     if (currentHelpPage === 1) {
         prevBtn.style.display = 'none';
     } else {

@@ -42,30 +42,30 @@
                             <div class="item-grid">
                                 <button id="seed-button-lettuce" class="item-slot action-button">
                                     レタス 🥬<br>
-                                    買うねだん: 50 円<br>
+                                    <span id="market-price-lettuce">種を買うねだん: 50 円</span>
                                     しゅうかくまで: 1ヶ月<br>
-                                    <span id="market-price-lettuce">今の売るねだん: --- 円</span>
+                                    売るねだん: 160 円
                                     <div class="market-button action-button">この種を植える</div>
                                 </button>
                                 <button id="seed-button-carot" class="item-slot action-button">
                                     ニンジン 🥕<br>
-                                    買うねだん: 100 円<br>
+                                    <span id="market-price-carrot"> 種を買うねだん: 100 円</span>
                                     しゅうかくまで: 2ヶ月<br>
-                                    <span id="market-price-carrot">今の売るねだん: --- 円</span>
+                                    売るねだん: 280 円
                                     <div class="market-button action-button">この種を植える</div>
                                 </button>
                                 <button id="seed-button-tomato" class="item-slot action-button">
                                     トマト 🍅<br>
-                                    買うねだん: 120 円<br>
+                                    <span id="market-price-tomato"> 種を買うねだん: 120 円</span>
                                     しゅうかくまで: 3ヶ月<br>
-                                    <span id="market-price-tomato">今の売るねだん: --- 円</span>
+                                    売るねだん: 450 円
                                     <div class="market-button action-button">この種を植える</div>
                                 </button>
                                 <button id="seed-button-onion" class="item-slot action-button">
                                     タマネギ 🧅<br>
-                                    買うねだん: 150 円<br>
+                                    <span id="market-price-onion"> 種を買うねだん: 150 円</span>
                                     しゅうかくまで: 4ヶ月<br>
-                                    <span id="market-price-onion">今の売るねだん: --- 円</span>
+                                    売るねだん: 550 円
                                     <div class="market-button action-button">この種を植える</div>
                                 </button>
                             </div>
@@ -83,38 +83,42 @@
                             <div class="item-grid" style="height: 85%;">
                                 <div class="item-slot note-slot">
                                     <h4>レタス 🥬</h4>
-                                    <p>ねだんが大きく変わる！</p>
-                                    <p>
-                                        買うねだん: 50 円<br>
-                                        しゅうかくまで: 1ヶ月</p>
-                                    <p id="note-price-lettuce">今の売るねだん：--- 円</p>
+                                    <p>ねだんが上がりやすいかも</p>
+                                    <p style="font-weight: bold;">
+                                        <span id="note-price-lettuce">種を買うねだん: 50 円</span><br>
+                                        しゅうかくまで: 1ヶ月<br>
+                                        売るねだん：160 円
+                                    </p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                                 <div class="item-slot note-slot">
                                     <h4>ニンジン 🥕</h4>
                                     <p>いちばん安定！</p>
-                                    <p>
-                                        買うねだん: 100 円<br>
-                                        しゅうかくまで: 2ヶ月</p>
-                                    <p id="note-price-carrot">今の売るねだん：--- 円</p>
+                                    <p style="font-weight: bold;">
+                                        <span id="note-price-carrot"> 種を買うねだん: 100 円</span><br>
+                                        しゅうかくまで: 2ヶ月<br>
+                                        売るねだん：280 円
+                                    </p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                                 <div class="item-slot note-slot">
                                     <h4>トマト 🍅</h4>
-                                    <p>ねだんが下がりやすいかも</p>
-                                    <p>
-                                        買うねだん: 120 円<br>
-                                        しゅうかくまで: 3ヶ月</p>
-                                    <p id="note-price-tomato">今の売るねだん：--- 円</p>
+                                    <p>ねだんが大きく変わる！</p>
+                                    <p style="font-weight: bold;">
+                                        <span id="note-price-tomato"> 種を買うねだん: 120 円</span><br>
+                                        しゅうかくまで: 3ヶ月<br>
+                                        売るねだん：450 円
+                                    </p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                                 <div class="item-slot note-slot">
                                     <h4>タマネギ 🧅</h4>
                                     <p>ゆっくり安全に！</p>
-                                    <p>
-                                        買うねだん: 150 円<br>
-                                        しゅうかくまで: 4ヶ月</p>
-                                    <p id="note-price-onion">今の売るねだん：--- 円</p>
+                                    <p style="font-weight: bold;">
+                                        <span id="note-price-onion"> 種を買うねだん: 150 円</span><br>
+                                        しゅうかくまで: 4ヶ月<br>
+                                        売るねだん：550 円
+                                    </p>
                                     <textarea class="memo-note" placeholder="メモや計算をしよう！"></textarea>
                                 </div>
                             </div>
@@ -170,7 +174,7 @@
                                 「次の月へ」をおすと、時間が進んで野菜が育ちます。</p>
                             <p><strong>3. 売る（しゅうかく）</strong><br>
                                 育ちきった野菜を「しゅうかく」すると、自動的に売られてお金になります。<br>
-                                <span style="color: #e74c3c;">※「売るねだん」は毎月変わるよ！安くなっているときは注意！</span>
+                                <span style="color: #e74c3c;">※「種を買うねだん」は毎月変わるよ！高くなっているときは注意！</span>
                             </p>
                         </div>
                     </div>
