@@ -96,7 +96,7 @@
 
     /* 畑エリアの文字を大きく（画面長辺の5%くらい） */
     #farm-area * {
-        font-size: 0.2em;
+        font-size: 1em;
     }
 
     #next-month-button,
