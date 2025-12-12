@@ -254,46 +254,4 @@ html {
         left: 50%;
         transform: translate(-50%, -50%) rotate(90deg);
     }
-
-    /* --- 文字サイズの拡大（スマホ縦持ち時のみ適用） --- */
-
-    /* 畑エリアの文字を大きく（画面長辺の5%くらい） */
-    #farm-area *{
-        font-size: 50%;
-        
-    }
-
-    #next-month-button,
-    #farm-button {
-        font-size: 2em;
-        height: 7dvw;
-        width: 10dvh;
-    }
-
-    /* マーケットとノートの文字を大きく */
-    /* ※ねだんタブ（#content-price）には適用しない */
-    #content-market .side-panel-box,
-    #content-note .side-panel-box {
-        font-size: 2dvh;
-    }
-
-    /* タブボタンも押しやすく大きくする */
-    .tab-button {
-        font-size: 2.5dvh;
-        padding: 1.5dvh 1dvh;
-    }
-
-    /* ボタン内の文字サイズ調整 */
-    .action-button {
-        font-size: 0.5em;
-    }
-
-    /* ノート画面の文字調整 */
-    .item-slot.note-slot h4 {
-        font-size: 0.8em;
-    }
-
-    .item-slot.note-slot p {
-        font-size: 1.2em;
-    }
 }

@@ -86,7 +86,23 @@
 
 #farm-button.active {
     background-color: #f39c12;
-    color: white; 
+    color: white;
     border: 2px solid #e67e22;
     box-shadow: 0 0 8px rgba(243, 156, 18, 1);
+}
+
+@media screen and (orientation: portrait) {
+    /* --- 文字サイズの拡大（スマホ縦持ち時のみ適用） --- */
+
+    /* 畑エリアの文字を大きく（画面長辺の5%くらい） */
+    #farm-area * {
+        font-size: 50%;
+    }
+
+    #next-month-button,
+    #farm-button {
+        font-size: 2em;
+        height: 7dvw;
+        width: 10dvh;
+    }
 }
