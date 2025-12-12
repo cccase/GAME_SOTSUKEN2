@@ -258,15 +258,15 @@ html {
     /* --- 文字サイズの拡大（スマホ縦持ち時のみ適用） --- */
 
     /* 畑エリアの文字を大きく（画面長辺の5%くらい） */
-    #farm-area {
-        font-size: 10dvh;
+    #farm-area *{
+        font-size: 150%;
     }
 
     /* マーケットとノートの文字を大きく */
     /* ※ねだんタブ（#content-price）には適用しない */
     #content-market .side-panel-box,
     #content-note .side-panel-box {
-        font-size: 3dvh;
+        font-size: 2dvh;
     }
 
     /* タブボタンも押しやすく大きくする */
