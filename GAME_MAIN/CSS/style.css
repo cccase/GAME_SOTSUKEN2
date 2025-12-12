@@ -216,8 +216,8 @@ html {
 /* --- 画面回転（縦向き時）の設定 --- */
 @media screen and (orientation: portrait) {
     body {
-        width: 100vw;
-        height: 100vh;
+        width: 100dvw;
+        height: 100dvh;
         overflow: hidden;
         position: fixed;
     }
@@ -226,9 +226,9 @@ html {
     #slide-container,
     #title-screen {
         /* スマホの時だけ、ここで高さを100dvh（アドレスバー対策）に上書きします */
-        width: 100vh !important;
         width: 100dvh !important;
-        height: 100vw !important;
+        width: 100dvh !important;
+        height: 100dvw !important;
 
         position: absolute !important;
         top: 50% !important;
@@ -249,7 +249,7 @@ html {
     #overlay {
         width: 100vh;
         width: 100dvh;
-        height: 100vw;
+        height: 100dvw;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(90deg);
