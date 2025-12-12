@@ -105,13 +105,13 @@ html {
     max-width: 800px;
     min-width: 500px;
     padding: 40px;
-    
+
     border-radius: 20px;
     text-align: center;
     border: 6px solid #8e44ad;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.6);
-    
-    font-size: 1.2rem; 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+
+    font-size: 1.2rem;
     cursor: default;
     animation: popIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
@@ -129,8 +129,15 @@ html {
 
 /* ポップアップのアニメーション定義 */
 @keyframes popIn {
-    0% { transform: scale(0.8); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 @media (max-width: 600px) {
@@ -145,19 +152,22 @@ html {
     transform: translateY(-3px);
     opacity: 0.9;
 }
+
 #title-screen .action-button:active {
     transform: translateY(2px);
     box-shadow: none !important;
 }
 
 /* ヘルプ・ヒントセクション内のスタイル */
-#help-section h2, #hint-section h2 {
+#help-section h2,
+#hint-section h2 {
     border-bottom: 2px solid #eee;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
-#help-section p, #hint-section p {
+#help-section p,
+#hint-section p {
     margin-bottom: 12px;
 }
 
@@ -165,46 +175,13 @@ html {
 #content-note .action-button {
     box-shadow: 0 4px 0 #d35400;
 }
+
 #content-note .action-button:active {
     box-shadow: none;
     transform: translateY(4px);
 }
 
 
-/* --- 画面回転（縦向き時）の設定 --- */
-@media screen and (orientation: portrait) {
-    body {
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-        position: fixed;
-    }
-
-    #slide-container {
-        width: 100vh; 
-        height: 100vw;
-        
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(90deg);
-        
-        transform-origin: center center;
-        overflow: hidden;
-    }
-
-    #custom-cursor {
-        transform: translate(-50%, -50%) rotate(90deg) !important;
-    }
-    
-    #overlay {
-        width: 100vh;
-        height: 100vw;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) rotate(90deg);
-    }
-}
 
 /* アンケートボタンのスタイル */
 #survey-link-button {
@@ -232,6 +209,83 @@ html {
 }
 
 /* 変数定義 */
-:root{
+:root {
     --main-contents-bg: #f0f0f0dd;
+}
+
+/* --- 画面回転（縦向き時）の設定 --- */
+@media screen and (orientation: portrait) {
+    body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        position: fixed;
+    }
+
+    /* ゲーム画面とタイトル画面を回転させる設定 */
+    #slide-container,
+    #title-screen {
+        /* スマホの時だけ、ここで高さを100dvh（アドレスバー対策）に上書きします */
+        width: 100vh !important;
+        width: 100dvh !important;
+        height: 100vw !important;
+
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+
+        /* 90度回転させて中心に配置 */
+        transform: translate(-50%, -50%) rotate(90deg) !important;
+        transform-origin: center center;
+        overflow: hidden;
+    }
+
+    /* カーソルの回転補正 */
+    #custom-cursor {
+        transform: translate(-50%, -50%) rotate(90deg) !important;
+    }
+
+    /* オーバーレイ（暗い背景）も回転 */
+    #overlay {
+        width: 100vh;
+        width: 100dvh;
+        height: 100vw;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    /* --- 文字サイズの拡大（スマホ縦持ち時のみ適用） --- */
+
+    /* 畑エリアの文字を大きく（画面長辺の5%くらい） */
+    #farm-area {
+        font-size: 5dvh;
+    }
+
+    /* マーケットとノートの文字を大きく */
+    /* ※ねだんタブ（#content-price）には適用しない */
+    #content-market .side-panel-box,
+    #content-note .side-panel-box {
+        font-size: 5dvh;
+    }
+
+    /* タブボタンも押しやすく大きくする */
+    .tab-button {
+        font-size: 2.5dvh;
+        padding: 1.5dvh 1dvh;
+    }
+
+    /* ボタン内の文字サイズ調整 */
+    .action-button {
+        font-size: 1em;
+    }
+
+    /* ノート画面の文字調整 */
+    .item-slot.note-slot h4 {
+        font-size: 1.2em;
+    }
+
+    .item-slot.note-slot p {
+        font-size: 0.9em;
+    }
 }
