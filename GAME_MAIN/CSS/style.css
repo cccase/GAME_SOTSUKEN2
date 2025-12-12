@@ -259,7 +259,7 @@ html {
 
     /* 畑エリアの文字を大きく（画面長辺の5%くらい） */
     #farm-area *{
-        font-size: 50%;
+        font-size: 70%;
     }
 
     /* マーケットとノートの文字を大きく */
@@ -286,6 +286,6 @@ html {
     }
 
     .item-slot.note-slot p {
-        font-size: 1em;
+        font-size: 1.2em;
     }
 }
