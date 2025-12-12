@@ -258,8 +258,15 @@ html {
     /* --- 文字サイズの拡大（スマホ縦持ち時のみ適用） --- */
 
     /* 畑エリアの文字を大きく（画面長辺の5%くらい） */
-    #farm-area *{
+    #farm-area * {
         font-size: 150%;
+    }
+
+    #next-month-button,
+    #farm-button {
+        font-size: 2em;
+        height: 7dvw;
+        width: 10dvh;
     }
 
     /* マーケットとノートの文字を大きく */
