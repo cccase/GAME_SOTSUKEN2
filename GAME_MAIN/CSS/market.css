@@ -253,10 +253,10 @@
 
     /* ノート画面の文字調整 */
     .item-slot.note-slot h4 {
-        font-size: 0.8em;
+        font-size: 1.2em;
     }
 
     .item-slot.note-slot p {
-        font-size: 1.2em;
+        font-size: 0.9em;
     }
 }
